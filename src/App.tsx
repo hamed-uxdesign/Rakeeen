@@ -90,7 +90,7 @@ export default function App() {
   return (
     <LangProvider>
       <SiteProvider>
-        <Router basename={import.meta.env.BASE_URL}>
+        <Router basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
           <ScrollToTop />
           <ThemeSync />
           <MainLayout>
