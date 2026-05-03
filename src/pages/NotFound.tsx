@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CustomCursor } from '../components/ui/CustomCursor';
 
 // Detect current theme from body class or localStorage
 const getTheme = (): 'dark' | 'light' => {
@@ -116,13 +117,6 @@ export const NotFound: React.FC = () => {
   const navigate = useNavigate();
   const [theme, setTheme] = useState<'dark' | 'light'>(getTheme);
 
-  // Force cursor visible — overrides the global `cursor: none` on body
-  useEffect(() => {
-    const prev = document.body.style.cursor;
-    document.body.style.setProperty('cursor', 'auto', 'important');
-    return () => { document.body.style.cursor = prev; };
-  }, []);
-
   // Watch for theme changes
   useEffect(() => {
     const observer = new MutationObserver(() => setTheme(getTheme()));
@@ -164,8 +158,8 @@ export const NotFound: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center',
       filter: 'grayscale(1) contrast(1.05)',
-      cursor: 'auto',
     }}>
+      <CustomCursor />
       <FilmCanvas isLight={isLight} />
       <FilmSprockets isLight={isLight} />
 
@@ -309,7 +303,6 @@ export const NotFound: React.FC = () => {
       </div>
 
       <style>{`
-        html, body, * { cursor: auto !important; }
         @keyframes glitch {
           0%, 90%, 100% { transform: translate(0); }
           91% { transform: translate(-3px, 1px); }

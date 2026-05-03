@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { CustomCursor } from '../components/ui/CustomCursor';
 
 const getTheme = (): 'dark' | 'light' => {
   if (document.body.classList.contains('light')) return 'light';
@@ -113,13 +114,6 @@ export const Offline: React.FC = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [justCameOnline, setJustCameOnline] = useState(false);
 
-  // Force cursor visible — overrides the global `cursor: none` on body
-  useEffect(() => {
-    const prev = document.body.style.cursor;
-    document.body.style.setProperty('cursor', 'auto', 'important');
-    return () => { document.body.style.cursor = prev; };
-  }, []);
-
   // Watch theme changes
   useEffect(() => {
     const observer = new MutationObserver(() => setTheme(getTheme()));
@@ -179,8 +173,8 @@ export const Offline: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center',
       filter: 'grayscale(1) contrast(1.05)',
-      cursor: 'auto',
     }}>
+      <CustomCursor />
       <FilmCanvas isLight={isLight} />
       <FilmSprockets isLight={isLight} />
 
@@ -322,7 +316,6 @@ export const Offline: React.FC = () => {
       </div>
 
       <style>{`
-        html, body, * { cursor: auto !important; }
         @keyframes glitch {
           0%, 90%, 100% { transform: translate(0); }
           91% { transform: translate(-3px, 1px); }
