@@ -46,7 +46,7 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
     >
       {/* Logo */}
       <Link to="/" className="navbar-logo" onClick={() => setIsMenuOpen(false)}>
-        {siteConfig.siteImages?.aboutPortrait ? (
+        {(siteConfig.siteImages?.navbarLogo || siteConfig.siteImages?.aboutPortrait) ? (
           <div style={{ 
             width: 35, 
             height: 35, 
@@ -58,7 +58,11 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <img src={siteConfig.siteImages.aboutPortrait} alt="RAKEEEEN" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img 
+              src={siteConfig.siteImages.navbarLogo || siteConfig.siteImages.aboutPortrait} 
+              alt="RAKEEEEN" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           </div>
         ) : (
           <MascotFace size={32} color={isOverlay ? '#faf6ee' : 'var(--ink)'} />

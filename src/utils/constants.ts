@@ -37,6 +37,7 @@ export const SITE_CONFIG = {
     behance: 'https://www.behance.net/rakeeen',
   },
   siteImages: {
+    navbarLogo: '',
     aboutPortrait: '',
     contactBackground: '',
     projectDetail1: '',
