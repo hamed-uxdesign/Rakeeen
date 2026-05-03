@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, Outlet } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { Home } from './pages/Home';
@@ -7,6 +7,8 @@ import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { About } from './pages/About';
+import { NotFound } from './pages/NotFound';
+import { Offline } from './pages/Offline';
 import { CustomCursor } from './components/ui/CustomCursor';
 import { SiteProvider, useSiteContext } from './contexts/SiteContext';
 import { LangProvider } from './contexts/LangContext';
@@ -33,7 +35,22 @@ const ThemeSync = () => {
   return null;
 };
 
-const MainLayout = ({ children }: { children: React.ReactNode }) => {
+// Applies the favicon from SiteContext to the browser tab
+const FaviconSync = () => {
+  const { siteConfig } = useSiteContext();
+  useEffect(() => {
+    const faviconUrl = siteConfig?.siteImages?.favicon;
+    if (faviconUrl) {
+      const link = document.getElementById('favicon') as HTMLLinkElement;
+      if (link) {
+        link.href = faviconUrl;
+      }
+    }
+  }, [siteConfig?.siteImages?.favicon]);
+  return null;
+};
+
+const MainLayout = ({ children }: { children?: React.ReactNode }) => {
   const { settings, isInitialLoad, setInitialLoadComplete } = useSiteContext();
   const location = useLocation();
   const isProjectDetail = location.pathname.startsWith('/project/');
@@ -108,7 +125,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <Navbar isOverlay={isProjectDetail} />
       </div>
       <main style={{ flexGrow: 1, paddingTop: (isProjectDetail || isHome) ? 0 : '2.5rem' }}>
-        {children}
+        {children ?? <Outlet />}
       </main>
       <div style={{ 
         opacity: isInitialLoad ? 0 : 1, 
@@ -121,24 +138,45 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// Watches online/offline status and shows the film-noir offline page
+const OnlineGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  useEffect(() => {
+    const goOnline = () => setIsOnline(true);
+    const goOffline = () => setIsOnline(false);
+    window.addEventListener('online', goOnline);
+    window.addEventListener('offline', goOffline);
+    return () => {
+      window.removeEventListener('online', goOnline);
+      window.removeEventListener('offline', goOffline);
+    };
+  }, []);
+  if (!isOnline) return <Offline />;
+  return <>{children}</>;
+};
+
 export default function App() {
   return (
-    <LangProvider>
-      <SiteProvider>
-        <Router basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-          <ScrollToTop />
-          <ThemeSync />
-          <MainLayout>
+    <OnlineGuard>
+      <LangProvider>
+        <SiteProvider>
+          <Router basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+            <ScrollToTop />
+            <ThemeSync />
+            <FaviconSync />
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/project/:id" element={<ProjectDetail />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route element={<MainLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/project/:id" element={<ProjectDetail />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
             </Routes>
-          </MainLayout>
-        </Router>
-      </SiteProvider>
-    </LangProvider>
+          </Router>
+        </SiteProvider>
+      </LangProvider>
+    </OnlineGuard>
   );
 }
