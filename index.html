@@ -14,6 +14,18 @@
 </head>
 
 <body>
+  <script>
+    try {
+      const local = localStorage.getItem('visitor_settings');
+      let theme = null;
+      if (local) {
+        theme = JSON.parse(local).theme;
+      } else {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      if (theme) document.body.classList.add(theme);
+    } catch(e) {}
+  </script>
   <div id="root"></div>
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
   <script type="module" src="/src/main.tsx"></script>

@@ -100,9 +100,9 @@ body.dark {
 }
 
 html.rtl, [dir="rtl"] {
-  --font-sketch: 'IBM Plex Sans Arabic', system-ui, sans-serif;
-  --font-body: 'IBM Plex Sans Arabic', system-ui, sans-serif;
-  --font-mono: 'IBM Plex Sans Arabic', system-ui, monospace;
+  --font-sketch: "SF Pro Arabic Rounded", "SF Pro Rounded", ui-rounded, system-ui, -apple-system, sans-serif;
+  --font-body: "SF Pro Arabic Rounded", "SF Pro Rounded", ui-rounded, system-ui, -apple-system, sans-serif;
+  --font-mono: "SF Pro Arabic Rounded", "SF Pro Rounded", ui-rounded, ui-monospace, monospace;
 }
 
 html[dir="rtl"] select {
@@ -224,7 +224,7 @@ select:-webkit-autofill:focus {
   font-family: var(--font-sketch);
   font-size: 1.2rem;
   font-weight: 700;
-  background: transparent;
+  background: var(--paper);
   border: 2px solid var(--ink);
   border-radius: var(--radius-btn);
   padding: 0.5rem 1.8rem;
@@ -331,6 +331,7 @@ select:-webkit-autofill:focus {
   font-family: var(--font-sketch);
   font-size: 1.05rem;
   font-weight: 600;
+  font-style: normal;
   padding: 0.3rem 1rem;
   border: 1.5px solid;
   display: inline-block;
@@ -402,7 +403,10 @@ textarea.input-line { resize: none; border: none; border-bottom: 1.5px solid var
   padding: 0 1rem;
 }
 
-/* ── RESPONSIVE ── */
+.responsive-headline {
+  white-space: nowrap;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .hero-grid {
@@ -436,6 +440,11 @@ textarea.input-line { resize: none; border: none; border-bottom: 1.5px solid var
   }
   .polaroid { padding: 8px 8px 28px; }
   .hide-mobile { display: none !important; }
+  .responsive-headline {
+    white-space: normal !important;
+    max-width: 320px !important;
+    line-height: 1.2 !important;
+  }
 }
 
 /* ── NAVBAR RE-ENGINEERING ── */

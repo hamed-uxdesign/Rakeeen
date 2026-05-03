@@ -8,9 +8,9 @@ import { Contact } from './pages/Contact';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { About } from './pages/About';
 import { CustomCursor } from './components/ui/CustomCursor';
-import { SiteProvider, useSiteContext } from './context/SiteContext';
-import { LangProvider } from './context/LangContext';
-import { db } from './firebase';
+import { SiteProvider, useSiteContext } from './contexts/SiteContext';
+import { LangProvider } from './contexts/LangContext';
+import { db } from './services/firebase.service';
 import { doc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore';
 
 const ScrollToTop = () => {
@@ -34,9 +34,10 @@ const ThemeSync = () => {
 };
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
-  const { settings } = useSiteContext();
+  const { settings, isInitialLoad, setInitialLoadComplete } = useSiteContext();
   const location = useLocation();
   const isProjectDetail = location.pathname.startsWith('/project/');
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const trackVisit = async () => {
@@ -74,14 +75,48 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     trackVisit();
   }, []);
 
+  useEffect(() => {
+    if (isInitialLoad) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100vh'; // Prevent scrolling on some mobile browsers
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+    };
+  }, [isInitialLoad]);
+
+  useEffect(() => {
+    if (!isHome && isInitialLoad) {
+      setInitialLoadComplete();
+    }
+  }, [isHome, isInitialLoad, setInitialLoadComplete]);
+
   return (
     <div className="paper-texture" style={{ display: 'flex', flexDirection: 'column' }}>
       {settings?.showCursor !== false && <CustomCursor />}
-      <Navbar isOverlay={isProjectDetail} />
-      <main style={{ flexGrow: 1, paddingTop: isProjectDetail ? 0 : '2.5rem' }}>
+      <div style={{ 
+        opacity: isInitialLoad ? 0 : 1, 
+        transition: 'opacity 0.8s ease 0.2s',
+        pointerEvents: isInitialLoad ? 'none' : 'auto',
+        position: 'relative',
+        zIndex: 100
+      }}>
+        <Navbar isOverlay={isProjectDetail} />
+      </div>
+      <main style={{ flexGrow: 1, paddingTop: (isProjectDetail || isHome) ? 0 : '2.5rem' }}>
         {children}
       </main>
-      <Footer />
+      <div style={{ 
+        opacity: isInitialLoad ? 0 : 1, 
+        transition: 'opacity 0.8s ease 0.6s',
+        pointerEvents: isInitialLoad ? 'none' : 'auto'
+      }}>
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSiteContext } from '../context/SiteContext';
-import { useLang } from '../context/LangContext';
+import { useSiteContext } from '../contexts/SiteContext';
+import { useLang } from '../contexts/LangContext';
 import { useNavigate } from 'react-router-dom';
 import { MascotFace } from '../components/ui/MascotFace';
 import { SkillTag } from '../components/ui/SkillTag';
@@ -21,13 +21,29 @@ export const About = () => {
       {/* About Hero */}
       <section style={{ padding: "4rem 0 2rem" }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "3rem", alignItems: "center" }}>
-           <div>
+           <div style={{ flex: 1, minWidth: '300px' }}>
              <h1 style={{ fontFamily: "var(--font-sketch)", fontSize: "clamp(2.5rem, 6vw, 4rem)", fontWeight: 700, color: "var(--ink)", marginBottom: "1rem" }}>
                {t('behindPixels')}
              </h1>
-             <p style={{ fontFamily: "var(--font-body)", fontSize: "1.1rem", lineHeight: 1.8, color: "var(--ink-faded)", maxWidth: "800px" }}>
+             <p style={{ 
+               fontFamily: "var(--font-body)", 
+               fontSize: "1.1rem", 
+               lineHeight: 1.8, 
+               color: "var(--ink-faded)", 
+               maxWidth: "800px",
+               fontStyle: "normal"
+             }}>
                {resolveField(siteConfig.detailed_summary) || resolveField(siteConfig.summary)}
              </p>
+           </div>
+           <div style={{ 
+             display: 'flex', 
+             justifyContent: 'center', 
+             flexShrink: 0, 
+             opacity: 0.3,
+             paddingInlineStart: "2rem"
+           }}>
+             <MascotFace size={150} color="var(--ink)" />
            </div>
         </div>
       </section>
@@ -51,7 +67,7 @@ export const About = () => {
       {/* Skills */}
       <section style={{ padding: "2rem 0 3rem" }}>
         <h2 style={{ fontFamily: "var(--font-sketch)", fontSize: "2rem", marginBottom: "1.5rem", color: "var(--ink)" }}>
-          {t('myToolkit')} <span style={{ color: "var(--ink-light)", fontSize: "1.2rem" }}>{t('skills')}</span>
+          {t('mySkills')} <span style={{ color: "var(--ink-light)", fontSize: "1.2rem" }}>{t('skills')}</span>
         </h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem" }}>
           {competencies.map((skill, index) => (
@@ -60,19 +76,46 @@ export const About = () => {
         </div>
       </section>
 
-      {/* Philosophy / CTA */}
-      <div style={{ background: "var(--cream)", border: "1.5px solid var(--ink-light)", borderRadius: "var(--radius-organic)", padding: "2.5rem", marginBottom: "4rem", display: "flex", alignItems: "center", gap: "2.5rem", flexDirection: "row", flexWrap: "wrap", justifyContent: 'center' }}>
-        <div style={{ flex: 1, minWidth: '280px', textAlign: 'inherit' }}>
-            <h3 style={{ fontFamily: "var(--font-sketch)", fontSize: "2.2rem", color: "var(--ink)", marginBottom: "0.5rem" }}>{t('getInTouch')}</h3>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "1.05rem", color: "var(--ink-faded)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
-              {t('alwaysLooking')}
-            </p>
-            <SketchyButton filled onClick={() => navigate("/contact")}>{t('reachOut')}</SketchyButton>
+      {/* Senior UX Professional CTA Section */}
+      <section style={{ padding: "4rem 0 8rem" }}>
+        <div style={{ 
+          background: "var(--paper)", 
+          borderTop: "1.5px solid var(--ink)", 
+          borderBottom: "1.5px solid var(--ink)",
+          padding: "5rem 0", 
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }}>
+          <h3 style={{ 
+            fontFamily: "var(--font-sketch)", 
+            fontSize: "2.2rem", 
+            color: "var(--ink)", 
+            marginBottom: "0.8rem",
+            letterSpacing: "-0.02em"
+          }}>
+            {t('getInTouch')}
+          </h3>
+          
+          <p style={{ 
+            fontFamily: "var(--font-body)", 
+            fontSize: "1rem", 
+            color: "var(--ink-faded)", 
+            marginBottom: "2.5rem", 
+            lineHeight: 1.6,
+            maxWidth: "500px",
+            fontStyle: "normal",
+            opacity: 0.8
+          }}>
+            {t('alwaysLooking')}
+          </p>
+
+          <SketchyButton filled onClick={() => navigate("/contact")} style={{ fontSize: "1.1rem", padding: "0.6rem 2.2rem" }}>
+            {t('reachOut')}
+          </SketchyButton>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-           <MascotFace size={100} color="var(--ink)" />
-        </div>
-      </div>
+      </section>
     </div>
   );
 };

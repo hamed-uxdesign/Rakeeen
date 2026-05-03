@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SITE_CONFIG as DEFAULT_CONFIG, PROJECTS as DEFAULT_PROJECTS, TIMELINE as DEFAULT_TIMELINE, COMPETENCIES as DEFAULT_COMPETENCIES } from '../constants';
+import { SITE_CONFIG as DEFAULT_CONFIG, PROJECTS as DEFAULT_PROJECTS, TIMELINE as DEFAULT_TIMELINE, COMPETENCIES as DEFAULT_COMPETENCIES } from '../utils/constants';
 import { Project, TimelineItem, Competency } from '../types';
-import { db } from '../firebase';
+import { db } from '../services/firebase.service';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 
 interface Inquiry {
@@ -25,6 +25,8 @@ interface SiteContextType {
   competencies: Competency[];
   inquiries: Inquiry[];
   settings: UISettings;
+  syncComplete: boolean;
+  isInitialLoad: boolean;
   updateConfig: (config: Partial<typeof DEFAULT_CONFIG>) => void;
   updateProjects: (projects: Project[]) => void;
   updateTimeline: (timeline: TimelineItem[]) => void;
@@ -32,6 +34,7 @@ interface SiteContextType {
   updateSettings: (settings: Partial<UISettings>) => void;
   addInquiry: (inquiry: Omit<Inquiry, 'id' | 'date' | 'status'>) => void;
   markInquiryRead: (id: string) => void;
+  setInitialLoadComplete: () => void;
 }
 
 const SiteContext = createContext<SiteContextType | undefined>(undefined);
@@ -42,6 +45,8 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
   const [timeline, setTimeline] = useState(DEFAULT_TIMELINE);
   const [competencies, setCompetencies] = useState(DEFAULT_COMPETENCIES);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [syncComplete, setSyncComplete] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [settings, setSettings] = useState<UISettings>(() => {
     // 1. First priority: User's manual persistent choice
     const local = localStorage.getItem('visitor_settings');
@@ -102,6 +107,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
         };
         setDoc(docRef, initialData);
       }
+      setSyncComplete(true);
     });
 
     return () => unsub();
@@ -134,6 +140,10 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
     setInquiries(prev => prev.map(inv => inv.id === id ? { ...inv, status: 'read' } : inv));
   };
 
+  const setInitialLoadComplete = () => {
+    setIsInitialLoad(false);
+  };
+
   return (
     <SiteContext.Provider value={{
       siteConfig,
@@ -142,15 +152,18 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
       competencies,
       inquiries,
       settings,
+      syncComplete,
       updateConfig,
       updateProjects,
       updateTimeline,
       updateCompetencies,
       updateSettings,
       addInquiry,
-      markInquiryRead
+      markInquiryRead,
+      isInitialLoad,
+      setInitialLoadComplete
     }}>
-      {children}
+      {syncComplete ? children : null}
     </SiteContext.Provider>
   );
 };

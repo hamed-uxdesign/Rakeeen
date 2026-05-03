@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSiteContext } from '../../context/SiteContext';
-import { useLang } from '../../context/LangContext';
+import { useSiteContext } from '../../contexts/SiteContext';
+import { useLang } from '../../contexts/LangContext';
 import { MascotFace } from '../ui/MascotFace';
 
 export const Footer = () => {
@@ -9,31 +9,50 @@ export const Footer = () => {
 
   return (
     <footer style={{
-      borderTop: '1.5px dashed var(--tape)',
-      padding: '3rem 1.5rem',
+      background: 'var(--paper)',
+      color: 'var(--ink)',
+      padding: '4rem 1.5rem',
       textAlign: 'center',
       marginTop: 'auto',
       display: 'flex',
       flexDirection: 'column',
-      gap: '1.5rem',
-      alignItems: 'center'
+      gap: '2rem',
+      alignItems: 'center',
+      width: '100%'
     }}>
       {/* Socials mapped from Dashboard */}
       <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {siteConfig.socials && Object.entries(siteConfig.socials).map(([key, url]) => (
-            url ? (
-                <a key={key} href={url as string} target="_blank" rel="noreferrer" style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", color: "var(--ink)", textDecoration: "none", borderBottom: '1px solid var(--sepia)', textTransform: "capitalize", padding: "0.2rem 0.6rem" }}>
-                    {key}
-                </a>
-            ) : null
-        ))}
+        {(() => {
+          const socialOrder = ['linkedin', 'behance'];
+          return socialOrder.map(key => {
+            const url = (siteConfig.socials as any)?.[key];
+            if (!url) return null;
+            return (
+              <a key={key} href={url as string} target="_blank" rel="noreferrer" style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "1rem",
+                color: 'var(--ink)',
+                textDecoration: "none",
+                borderBottom: '1px solid var(--sepia)',
+                textTransform: "capitalize",
+                padding: "0.2rem 0.6rem",
+                transition: 'opacity 0.2s'
+              }}
+                onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
+                onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+              >
+                {key}
+              </a>
+            );
+          });
+        })()}
       </div>
-      
+
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-         <MascotFace size={24} color="var(--ink)" />
-         <p style={{ fontFamily: "var(--font-sketch)", fontSize: "1.1rem", color: "var(--ink-faded)" }}>
-            {t('madeBy')}
-         </p>
+        <MascotFace size={28} color="var(--ink)" />
+        <p style={{ fontFamily: "var(--font-sketch)", fontSize: "1.2rem", color: "var(--ink)" }}>
+          {t('madeBy')}
+        </p>
       </div>
     </footer>
   );

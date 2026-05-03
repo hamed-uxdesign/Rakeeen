@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSiteContext } from '../context/SiteContext';
-import { useLang } from '../context/LangContext';
+import { useSiteContext } from '../contexts/SiteContext';
+import { useLang } from '../contexts/LangContext';
 import { PolaroidCard } from '../components/ui/PolaroidCard';
 
 export const Projects = () => {
@@ -16,11 +16,11 @@ export const Projects = () => {
   return (
     <div className="page-container fade-in">
       <section style={{ padding: "3rem 0 1rem" }}>
-        <h1 style={{ fontFamily: "var(--font-sketch)", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>{t('theGallery')}</h1>
+        <h1 style={{ fontFamily: "var(--font-sketch)", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>{t('My Work')}</h1>
         <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--ink-faded)", marginBottom: "3rem" }}>{t('curated')}</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "2.5rem", alignItems: "start" }}>
           {projects.map((p, index) => (
-             <PolaroidCard key={p.id} project={p} index={index} />
+            <PolaroidCard key={p.id} project={p} index={index} />
           ))}
         </div>
       </section>

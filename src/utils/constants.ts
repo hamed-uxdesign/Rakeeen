@@ -19,8 +19,20 @@ export const SITE_CONFIG = {
     ar: '',
     it: ''
   },
+  heroHeadline: { 
+    en: '', 
+    ar: '', 
+    it: '' 
+  },
+  heroSubtitle: { 
+    en: "", 
+    ar: "", 
+    it: "" 
+  },
+  heroBtnPrimary: { en: '', ar: '', it: '' },
+  heroBtnSecondary1: { en: '', ar: '', it: '' },
+  heroBtnSecondary2: { en: '', ar: '', it: '' },
   socials: {
-    x: 'https://x.com/Rakeeeeeeen',
     linkedin: 'https://www.linkedin.com/in/rakeeen/',
     behance: 'https://www.behance.net/rakeeen',
   },

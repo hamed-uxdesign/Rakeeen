@@ -1,6 +1,6 @@
 import React from 'react';
 import { TimelineItem as TimelineItemType } from '../../types';
-import { useLang } from '../../context/LangContext';
+import { useLang } from '../../contexts/LangContext';
 
 interface TimelineItemProps {
   key?: React.Key;
@@ -49,9 +49,9 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ item, isLast }) => {
 
       <div style={{ width: "100%" }}>
         <p style={{ fontFamily: "var(--font-sketch)", fontSize: "1.3rem", fontWeight: 700, color: "var(--ink)", lineHeight: 1.2, marginBottom: "0.2rem" }}>{resolveField(item.role)}</p>
-        <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "0.95rem", color: "var(--sepia)", fontWeight: 600 }}>{resolveField(item.company)}</p>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", color: "var(--sepia)", fontWeight: 600 }}>{resolveField(item.company)}</p>
         <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--ink-light)", margin: "0.3rem 0 0.6rem", letterSpacing: "1px" }}>{resolveField(item.year)}</p>
-        <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "var(--ink-faded)", lineHeight: 1.6 }}>{resolveField(item.description)}</p>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "var(--ink-faded)", lineHeight: 1.6, fontStyle: "normal" }}>{resolveField(item.description)}</p>
       </div>
     </div>
   );

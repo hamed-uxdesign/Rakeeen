@@ -1,13 +1,16 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCUIpBtWDuKbkIGkjIOP4F3wKVAmhWT3dc",
-  authDomain: "hamed-web.firebaseapp.com",
-  projectId: "hamed-web",
-  storageBucket: "hamed-web.firebasestorage.app",
-  messagingSenderId: "927863215454",
-  appId: "1:927863215454:web:9b9438384ef20574b4ebcf"
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useSiteContext } from '../context/SiteContext';
-import { useLang } from '../context/LangContext';
+import { useSiteContext } from '../contexts/SiteContext';
+import { useLang } from '../contexts/LangContext';
 import { MascotFace } from '../components/ui/MascotFace';
 import { SketchyButton } from '../components/ui/SketchyButton';
-import { db } from '../firebase';
+import { db } from '../services/firebase.service';
 import { collection, addDoc, serverTimestamp, doc, updateDoc, increment, getDoc, setDoc } from 'firebase/firestore';
 
 /* ─── Sketchy inline toast ─────────────────────── */
@@ -55,19 +55,19 @@ export const Contact = () => {
     return field[lang] || field.en || fallback;
   };
 
-  const formHeading    = resolve(cf?.heading,             t('sendLetter'));
-  const formSubtitle   = resolve(cf?.subtitle,            t('oldSchool'));
-  const lblName        = resolve(cf?.labelName,           t('yourName'));
-  const lblEmail       = resolve(cf?.labelEmail,          t('yourEmail'));
-  const lblMessage     = resolve(cf?.labelMessage,        t('yourMessage'));
-  const phName         = resolve(cf?.placeholderName,     t('ph_name'));
-  const phEmail        = resolve(cf?.placeholderEmail,    t('ph_email'));
-  const phMessage      = resolve(cf?.placeholderMessage,  t('ph_message'));
-  const btnText        = resolve(cf?.btnText,             '');
-  const successHeading = resolve(cf?.successHeading,      t('letterSent'));
-  const successBody    = resolve(cf?.successBody,         '');
-  const responseTime   = resolve(cf?.responseTime,        t('iRespond'));
-  const formEnabled    = cf?.enabled !== false;
+  const formHeading = resolve(cf?.heading, t('sendLetter'));
+  const formSubtitle = resolve(cf?.subtitle, t('oldSchool'));
+  const lblName = resolve(cf?.labelName, t('yourName'));
+  const lblEmail = resolve(cf?.labelEmail, t('yourEmail'));
+  const lblMessage = resolve(cf?.labelMessage, t('yourMessage'));
+  const phName = resolve(cf?.placeholderName, t('ph_name'));
+  const phEmail = resolve(cf?.placeholderEmail, t('ph_email'));
+  const phMessage = resolve(cf?.placeholderMessage, t('ph_message'));
+  const btnText = resolve(cf?.btnText, '');
+  const successHeading = resolve(cf?.successHeading, t('letterSent'));
+  const successBody = resolve(cf?.successBody, '');
+  const responseTime = resolve(cf?.responseTime, t('iRespond'));
+  const formEnabled = cf?.enabled !== false;
 
   // Extra contact info items from dashboard (array of { label, value, type })
   const extraInfoItems: { label: any; value: string; type?: string }[] = cf?.extraInfo || [];
@@ -161,7 +161,7 @@ export const Contact = () => {
 
               <div style={{ display: "flex", alignItems: "center", gap: "2rem", marginTop: "1rem" }}>
                 <button className="wax-btn" onClick={handleSend} disabled={isSubmitting} style={{ opacity: isSubmitting ? 0.7 : 1 }}>
-                  {isSubmitting ? '...' : <span dangerouslySetInnerHTML={{__html: btnText || t('send_it')}}/>}
+                  {isSubmitting ? '...' : <span dangerouslySetInnerHTML={{ __html: btnText || t('send_it') }} />}
                 </button>
                 <div>
                   <p style={{ fontFamily: "var(--font-sketch)", fontSize: "1rem", color: "var(--ink-faded)" }}>{t('pressWax')}</p>
@@ -174,27 +174,15 @@ export const Contact = () => {
               <div style={{ display: 'flex', justifyContent: 'center' }}><MascotFace size={80} color="var(--forest)" /></div>
               <h3 style={{ fontFamily: "var(--font-sketch)", fontSize: "2rem", color: "var(--forest)", marginTop: "1rem" }}>{successHeading}</h3>
               <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--ink-faded)" }}>{successBody || t('illGetBack', { name: formData.name })}</p>
-              <SketchyButton style={{ marginTop: '2rem' }} onClick={() => { setSent(false); setFormData({name: '', email: '', message: ''}); }}>{t('sendAnother')}</SketchyButton>
+              <SketchyButton style={{ marginTop: '2rem' }} onClick={() => { setSent(false); setFormData({ name: '', email: '', message: '' }); }}>{t('sendAnother')}</SketchyButton>
             </div>
           )}
         </div>
 
         <hr className="sketch-divider" />
 
-        {/* Social links + Extra Info Items from dashboard */}
+        {/* Extra info items (phone, address, etc.) from Firebase */}
         <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
-          {[
-            ["Behance", siteConfig.socials.behance.replace('https://www.', '') || 'behance.net', siteConfig.socials.behance], 
-            ["LinkedIn", siteConfig.socials.linkedin.replace('https://www.', '') || 'linkedin.com', siteConfig.socials.linkedin],
-            ["Twitter / X", siteConfig.socials.x.replace('https://', '') || 'x.com', siteConfig.socials.x]
-          ].map(([label, handle, url]) => (
-            <div key={label as string}>
-              <p style={{ fontFamily: "var(--font-sketch)", fontSize: "0.9rem", color: "var(--ink-light)", textTransform: "uppercase" }}>{label}</p>
-              <a href={url as string} target="_blank" rel="noreferrer" style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--sepia)", textDecoration: 'none' }}>{handle}</a>
-            </div>
-          ))}
-
-          {/* Extra info items (phone, address, etc.) from Firebase */}
           {extraInfoItems.filter(item => item.value).map((item, i) => (
             <div key={i}>
               <p style={{ fontFamily: "var(--font-sketch)", fontSize: "0.9rem", color: "var(--ink-light)", textTransform: "uppercase" }}>

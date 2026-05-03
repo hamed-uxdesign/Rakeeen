@@ -44,6 +44,7 @@ export interface Project {
   strategy?: LocalizedField;
   keyResult?: LocalizedField;
   conclusion?: LocalizedField;
+  aiWorkflow?: LocalizedField;
   dynamicSections?: DynamicSection[];
 }
 

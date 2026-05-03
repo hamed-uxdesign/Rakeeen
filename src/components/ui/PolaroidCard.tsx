@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Project } from '../../types';
-import { useLang } from '../../context/LangContext';
+import { useLang } from '../../contexts/LangContext';
 
 interface PolaroidCardProps {
   key?: React.Key;
@@ -17,7 +17,19 @@ export const PolaroidCard: React.FC<PolaroidCardProps> = ({ project, index }) =>
   const color = `var(--card-bg-${colorIndex})`;
 
   return (
-    <div className="polaroid" style={{ "--tilt": tilt } as React.CSSProperties} onClick={() => navigate(`/project/${project.id}`)}>
+    <div 
+      className="polaroid" 
+      style={{ "--tilt": tilt } as React.CSSProperties} 
+      onClick={() => {
+        // Original behavior (commented out for now):
+        // navigate(`/project/${project.id}`)
+        
+        // Temporary behavior: Open hyperlink if exists
+        if (project.link) {
+          window.open(project.link, '_blank');
+        }
+      }}
+    >
       <div style={{ height: 180, background: color, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 2, position: 'relative', overflow: 'hidden' }}>
         <div style={{ textAlign: "center", position: 'relative', zIndex: 2 }}>
           <p style={{ fontFamily: "var(--font-sketch)", fontSize: "1.2rem", color: "rgba(255,255,255,0.8)", marginTop: "0.5rem", fontWeight: 'bold' }}>

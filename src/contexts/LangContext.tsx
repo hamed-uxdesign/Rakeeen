@@ -26,9 +26,9 @@ const UI_TRANSLATIONS: Translations = {
   bridgingLogic: { en: 'Bridging complex logic with', ar: 'بربط منطق البيزنس المعقد بـ', it: 'Colmare la logica complessa con' },
   humanCentered: { en: 'human-centered design.', ar: 'تصميم يخدم الناس صح.', it: 'design centrato sull\'uomo.' },
   behindPixels: { en: "Behind the Pixels", ar: "ورا الكواليس", it: "Dietro i Pixel" },
-  myJourney: { en: "Where I've been", ar: "لفيت فين", it: "Il Mio Percorso" },
-  experience: { en: "// experience", ar: "// خبرتي", it: "// esperienza" },
-  myToolkit: { en: "My toolkit", ar: "عِدِّتي الترسانة", it: "I Miei Strumenti" },
+  myJourney: { en: "The Story So Far", ar: "الرحلة حتى الآن", it: "La Storia Finora" },
+  experience: { en: "// my experience", ar: "// رحلتي المهنية", it: "// esperienza" },
+  mySkills: { en: "My skills", ar: "مهاراتي", it: "Le Mie Competenze" },
   skills: { en: "// skills", ar: "// مهاراتي", it: "// competenze" },
   alwaysLooking: { en: "I am always looking for the next problem to solve. Don't hesitate to reach out!", ar: "دايماً بدور على المشكلة الجاية اللي محتاجة حل.. كلمني على طول!", it: "Cerco sempre la prossima sfida. Non esitare a contattarmi!" },
   getInTouch: { en: "Let's collaborate", ar: "يلا نشتغل سوا", it: "Contattami" },
@@ -77,7 +77,27 @@ const UI_TRANSLATIONS: Translations = {
   role_fallback: { en: "Product Designer", ar: "مصمم منتجات", it: "Product Designer" },
   duration_fallback: { en: "Project Timeline", ar: "مدة المشروع", it: "Cronologia Progetto" },
   fill_fields: { en: "Please fill in your name, email and message.", ar: "يا ريت تملى اسمك وإيميلك والرسالة الأول.", it: "Per favore inserisci il tuo nome, email e messaggio." },
-  error_sending: { en: "Failed to send message. Please try again.", ar: "حصل مشكلة والرسالة متبعتتش.. جرب تاني كده؟", it: "Impossibile inviare il messaggio. Riprova." }
+  error_sending: { en: "Failed to send message. Please try again.", ar: "حصل مشكلة والرسالة متبعتتش.. جرب تاني كده؟", it: "Impossibile inviare il messaggio. Riprova." },
+  
+  // -- New Keys for 100% Localization Sweep --
+  knowMore: { en: "Know more about me", ar: "اعرف عني أكتر", it: "Scopri di più su di me" },
+  "My Work": { en: "My Work", ar: "أعمالي", it: "I Miei Lavori" }, // Key used in Projects.tsx
+  problem_label: { en: "Problem", ar: "المشكلة", it: "Problema" },
+  solution_label: { en: "Solution", ar: "الحل", it: "Soluzione" },
+  role_label_short: { en: "Role", ar: "الدور", it: "Ruolo" },
+  outcome_label: { en: "Outcome", ar: "النتيجة", it: "Risultato" },
+  snack_caption_1: { en: "Transforming complex flows into intuitive journeys.", ar: "تحويل المسارات المعقدة لرحلات بسيطة.", it: "Trasformare flussi complessi in percorsi intuitivi." },
+  snack_caption_2: { en: "Visual excellence meeting functional clarity.", ar: "الإبداع البصري مع وضوح الأداء.", it: "Eccellenza visiva che incontra la chiarezza funzionale." },
+  snack_caption_3: { en: "Delivering value at every interaction point.", ar: "تقديم قيمة في كل نقطة تفاعل.", it: "Fornire valore in ogni punto di interazione." },
+  theDeepDive: { en: "The Deep Dive", ar: "التفاصيل العميقة", it: "Approfondimento" },
+  meal_research: { en: "User Research & Insights", ar: "البحث والأفكار", it: "Ricerca Utente & Insight" },
+  meal_wireframes: { en: "Wireframes & Architecture", ar: "بناء المعلومات والتخطيط", it: "Wireframe & Architettura" },
+  meal_ai: { en: "AI-Enhanced Workflows", ar: "استخدامات الذكاء الاصطناعي", it: "Workflow potenziati dall'IA" },
+  meal_research_fallback: { en: "Detailed research methodology and findings.", ar: "تفاصيل الأبحاث والنتائج اللي وصلنا ليها.", it: "Metodologia di ricerca dettagliata e risultati." },
+  meal_wireframes_fallback: { en: "Information architecture and low-fidelity prototypes.", ar: "هيكلة المعلومات ونماذج التصميم المبدئية.", it: "Architettura dell'informazione e prototipi a bassa fedeltà." },
+  meal_ai_fallback: { en: "Leveraging AI prompts and tools to accelerate the design process and ensure consistency.", ar: "استخدام أدوات الذكاء الاصطناعي لتسريع التصميم وضمان الجودة.", it: "Utilizzo di strumenti IA per accelerare il processo e garantire coerenza." },
+  prevProject: { en: "← Previous Project", ar: "← المشروع اللي فات", it: "← Progetto Precedente" },
+  nextProject: { en: "Next Project →", ar: "المشروع الجاي →", it: "Prossimo Progetto →" }
 };
 
 interface LangContextType {

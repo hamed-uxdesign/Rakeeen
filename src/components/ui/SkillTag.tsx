@@ -1,6 +1,6 @@
 import React from 'react';
 import { LocalizedField } from '../../types';
-import { useLang } from '../../context/LangContext';
+import { useLang } from '../../contexts/LangContext';
 
 interface SkillTagProps {
   key?: React.Key;

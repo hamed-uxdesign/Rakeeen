@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { MascotFace } from '../ui/MascotFace';
-import { useSiteContext } from '../../context/SiteContext';
-import { useLang } from '../../context/LangContext';
+import { useSiteContext } from '../../contexts/SiteContext';
+import { useLang } from '../../contexts/LangContext';
 import { Menu, X } from 'lucide-react';
 
 export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
@@ -46,9 +46,25 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
     >
       {/* Logo */}
       <Link to="/" className="navbar-logo" onClick={() => setIsMenuOpen(false)}>
-        <MascotFace size={32} color={isOverlay ? '#fff' : undefined} />
-        <span className={`sketch-font text-lg md:text-xl font-bold ${isOverlay ? 'text-white' : 'color-ink'}`} style={isOverlay ? { color: '#fff' } : {}}>
-          {siteName}
+        {siteConfig.siteImages?.aboutPortrait ? (
+          <div style={{ 
+            width: 35, 
+            height: 35, 
+            borderRadius: "50%", 
+            border: `1.5px solid ${isOverlay ? '#faf6ee' : 'var(--sepia)'}`, 
+            overflow: "hidden", 
+            background: "var(--paper-dark)",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <img src={siteConfig.siteImages.aboutPortrait} alt="RAKEEEEN" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </div>
+        ) : (
+          <MascotFace size={32} color={isOverlay ? '#faf6ee' : 'var(--ink)'} />
+        )}
+        <span className="sketch-font text-lg md:text-xl font-bold" style={{ color: isOverlay ? '#faf6ee' : 'var(--ink)' }}>
+          Rakeeeeeen
         </span>
       </Link>
 
@@ -56,7 +72,7 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
       <button 
         className="mobile-menu-toggle"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        style={isOverlay ? { color: '#fff' } : {}}
+        style={isOverlay ? { color: '#faf6ee' } : {}}
       >
         {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
       </button>
@@ -70,7 +86,7 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
               to={path}
               className={`nav-link ${isActive(path) ? 'active' : ''}`}
               onClick={() => setIsMenuOpen(false)}
-              style={isOverlay ? { color: 'rgba(255,255,255,0.7)' } : {}}
+              style={isOverlay ? { color: '#faf6ee', opacity: 0.7 } : {}}
             >
               {name}
             </Link>
@@ -79,7 +95,7 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
         
         <div className="nav-controls">
           <div className={`custom-select-container ${isLangOpen ? 'active' : ''}`} onClick={() => setIsLangOpen(!isLangOpen)}>
-            <div className={`custom-select-trigger ${isOverlay ? 'overlay-trigger' : ''}`} style={isOverlay ? { background: 'rgba(255,255,255,0.1)', color: '#fff', borderColor: 'rgba(255,255,255,0.2)' } : {}}>
+            <div className={`custom-select-trigger ${isOverlay ? 'overlay-trigger' : ''}`} style={isOverlay ? { background: 'rgba(250, 246, 238, 0.1)', color: '#faf6ee', borderColor: 'rgba(250, 246, 238, 0.2)' } : {}}>
               {lang.toUpperCase()}
             </div>
             <div className="custom-select-options">
@@ -105,12 +121,12 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
               title="Toggle Theme"
           >
               {isDark ? (
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isOverlay ? "#fff" : "var(--ink)"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isOverlay ? "#faf6ee" : "var(--ink)"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z" />
                       <path d="M17 4l.5 1.5M19 6l1.5.5M15 8l-1-2" opacity="0.6" />
                   </svg>
               ) : (
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isOverlay ? "#fff" : "var(--ink)"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isOverlay ? "#faf6ee" : "var(--ink)"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="12" r="4" />
                       <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
                       <path d="M9 9l-1-1M15 15l1 1" opacity="0.4" />

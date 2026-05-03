@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useCustomCursor } from '../../hooks/useCustomCursor';
-import { useSiteContext } from '../../context/SiteContext';
+import { useSiteContext } from '../../contexts/SiteContext';
 
 export const CustomCursor = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
