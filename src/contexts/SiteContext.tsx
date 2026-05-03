@@ -163,7 +163,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
       isInitialLoad,
       setInitialLoadComplete
     }}>
-      {syncComplete ? children : null}
+      {children}
     </SiteContext.Provider>
   );
 };

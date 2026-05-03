@@ -157,9 +157,9 @@ const OnlineGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 export default function App() {
   return (
-    <OnlineGuard>
-      <LangProvider>
-        <SiteProvider>
+    <LangProvider>
+      <SiteProvider>
+        <OnlineGuard>
           <Router basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
             <ScrollToTop />
             <ThemeSync />
@@ -175,8 +175,8 @@ export default function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
-        </SiteProvider>
-      </LangProvider>
-    </OnlineGuard>
+        </OnlineGuard>
+      </SiteProvider>
+    </LangProvider>
   );
 }
