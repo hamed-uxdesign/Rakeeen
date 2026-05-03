@@ -37,13 +37,13 @@ export const About = () => {
              </p>
            </div>
            <div style={{ 
-             display: 'flex', 
+             display: (window.innerWidth < 768 ? 'none' : 'flex'), 
              justifyContent: 'center', 
              flexShrink: 0, 
              opacity: 0.3,
              paddingInlineStart: "2rem"
            }}>
-             <MascotFace size={150} color="var(--ink)" />
+             <div className="hidden md:block"><MascotFace size={150} color="var(--ink)" /></div>
            </div>
         </div>
       </section>

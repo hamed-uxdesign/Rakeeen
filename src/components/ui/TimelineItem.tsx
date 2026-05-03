@@ -15,14 +15,14 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ item, isLast }) => {
       display: "flex", 
       gap: "1.5rem", 
       paddingBottom: "2.5rem", 
-      paddingInlineStart: "2.5rem", 
+      paddingInlineStart: "2rem", // Slightly less padding on mobile
       position: "relative" 
     }}>
       {/* The Line - Precisely Centered Axis */}
       {!isLast && (
         <div style={{
           position: "absolute",
-          insetInlineStart: "11px", // Moved in a bit for better visual weight
+          insetInlineStart: "7px", 
           transform: "none",
           marginInlineStart: "-0.75px", // Center the 1.5px border on the 11px mark
           top: "11px",
@@ -38,7 +38,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ item, isLast }) => {
         className="timeline-dot" 
         style={{ 
           position: "absolute", 
-          insetInlineStart: "11px",
+          insetInlineStart: "7px", 
           transform: "none",
           marginInlineStart: "-7px", // Center the 14px dot on the 11px mark
           top: "4px", 

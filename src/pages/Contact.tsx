@@ -97,7 +97,7 @@ export const Contact = () => {
         if (snap.exists()) {
           await updateDoc(ref, { inquiries: increment(1) });
         } else {
-          await setDoc(ref, { visitors: 1, inquiries: 1 });
+          await setDoc(ref, { totalVisits: 1, uniqueVisitors: 1, inquiries: 1 });
         }
       } catch (e) {
         console.warn("Analytics tracking bypassed due to security rules.", e);
