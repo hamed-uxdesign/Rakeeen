@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://hamedwalid.com/sitemap.xml

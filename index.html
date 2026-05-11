@@ -3,33 +3,36 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" id="favicon" type="image/png" href="/Rakeeen/favicon.png" />
+  <link rel="icon" type="image/png" href="./favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght,grad,xtra,xopq,yopq,ytlc,fidl@8..144,25..151,100..1000,0,468,79,185,423,500,0&display=swap"
     rel="stylesheet">
   <title>HAMED</title>
-  <script type="module" crossorigin src="/Rakeeen/assets/index-CdFILGVr.js"></script>
-  <link rel="stylesheet" crossorigin href="/Rakeeen/assets/index-Hvs9q9tv.css">
-</head>
+  <script type="module" crossorigin src="./assets/index-C4KdQ0J7.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BUMiEXCz.css">
+<script>
+          fetch('version.json?t=' + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+              var currentVer = data.version;
+              var savedVer = localStorage.getItem("dashboard_version");
+              if (savedVer && savedVer !== currentVer) {
+                localStorage.setItem("dashboard_version", currentVer);
+                location.reload();
+              } else {
+                localStorage.setItem("dashboard_version", currentVer);
+              }
+            }).catch(e => console.log('v-error'));
+        </script></head>
 
 <body>
-  <script>
-    try {
-      const local = localStorage.getItem('visitor_settings');
-      let theme = null;
-      if (local) {
-        theme = JSON.parse(local).theme;
-      } else {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      if (theme) document.body.classList.add(theme);
-    } catch(e) {}
-  </script>
   <div id="root"></div>
-  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </body>
 
 </html>
