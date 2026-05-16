@@ -20,9 +20,9 @@ const UI_TRANSLATIONS: Translations = {
   featured: { en: "// featured", ar: "// الأهم", it: "// in evidenza" },
   viewAll: { en: "View All", ar: "شوف الكل", it: "Mostra Tutti" },
   curious: { en: "Curious about the process? Check my full profile.", ar: "عايز تعرف بشتغل إزاي؟ شوف بروفايلي.", it: "Incuriosito dal processo? Guarda il mio profilo." },
-  moreAbout: { en: "More About Me", ar: "تِعرف عني أكتر", it: "Scopri di più" },
-  seeMyWork: { en: "See My Work", ar: "شوف الكام مشروع دول", it: "Vedi i Lavori" },
-  sayHello: { en: "Say Hello", ar: "قولي سلام", it: "Saluta" },
+  moreAbout: { en: "More About Me ?", ar: "تِعرف عني أكتر ؟", it: "Scopri di più ?" },
+  seeMyWork: { en: "My Work ?", ar: "أعمالي ؟", it: "I Miei Lavori ?" },
+  sayHello: { en: "Hello ?", ar: "هلا ؟", it: "Ciao ?" },
   bridgingLogic: { en: 'Bridging complex logic with', ar: 'بربط منطق البيزنس المعقد بـ', it: 'Colmare la logica complessa con' },
   humanCentered: { en: 'human-centered design.', ar: 'تصميم يخدم الناس صح.', it: 'design centrato sull\'uomo.' },
   behindPixels: { en: "Behind the Pixels", ar: "ورا الكواليس", it: "Dietro i Pixel" },
@@ -78,9 +78,10 @@ const UI_TRANSLATIONS: Translations = {
   duration_fallback: { en: "Project Timeline", ar: "مدة المشروع", it: "Cronologia Progetto" },
   fill_fields: { en: "Please fill in your name, email and message.", ar: "يا ريت تملى اسمك وإيميلك والرسالة الأول.", it: "Per favore inserisci il tuo nome, email e messaggio." },
   error_sending: { en: "Failed to send message. Please try again.", ar: "حصل مشكلة والرسالة متبعتتش.. جرب تاني كده؟", it: "Impossibile inviare il messaggio. Riprova." },
-  
+
   // -- New Keys for 100% Localization Sweep --
-  knowMore: { en: "Know more about me", ar: "اعرف عني أكتر", it: "Scopri di più su di me" },
+  knowMore: { en: "About?", ar: "عني؟", it: "Chi Sono?" },
+  brandName: { en: "Rakeeeeeen", ar: "ركين", it: "Rakeeeeeen" },
   "My Work": { en: "My Work", ar: "أعمالي", it: "I Miei Lavori" }, // Key used in Projects.tsx
   problem_label: { en: "Problem", ar: "المشكلة", it: "Problema" },
   solution_label: { en: "Solution", ar: "الحل", it: "Soluzione" },
@@ -96,6 +97,16 @@ const UI_TRANSLATIONS: Translations = {
   meal_research_fallback: { en: "Detailed research methodology and findings.", ar: "تفاصيل الأبحاث والنتائج اللي وصلنا ليها.", it: "Metodologia di ricerca dettagliata e risultati." },
   meal_wireframes_fallback: { en: "Information architecture and low-fidelity prototypes.", ar: "هيكلة المعلومات ونماذج التصميم المبدئية.", it: "Architettura dell'informazione e prototipi a bassa fedeltà." },
   meal_ai_fallback: { en: "Leveraging AI prompts and tools to accelerate the design process and ensure consistency.", ar: "استخدام أدوات الذكاء الاصطناعي لتسريع التصميم وضمان الجودة.", it: "Utilizzo di strumenti IA per accelerare il processo e garantire coerenza." },
+  hero_headline: { 
+    en: "Designing For human ... With Ai", 
+    ar: "بصمم للناس ... بالذكاء الاصطناعي", 
+    it: "Progettare per l'uomo... con l'IA" 
+  },
+  hero_subtitle: {
+    en: "UX Designer turning complex ideas into simple, user-friendly products. Combining human-centered design with AI to deliver high-quality results, fast",
+    ar: "مصمم تجربة المستخدم بساعدك تحول فكرتك لمنتج بسيط وسهل الاستخدام. بدمج بين التصميم المريح والذكاء الاصطناعي عشان أطلعلك شغل تقيل في وقت قياسي",
+    it: "Designer UX trasformo idee complesse in prodotti semplici e intuitivi. Unisco design umano e IA per risultati di qualità in tempi record"
+  },
   prevProject: { en: "← Previous Project", ar: "← المشروع اللي فات", it: "← Progetto Precedente" },
   nextProject: { en: "Next Project →", ar: "المشروع الجاي →", it: "Prossimo Progetto →" }
 };
@@ -152,9 +163,9 @@ export const LangProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     if (lang === 'ar') {
-        document.documentElement.classList.add('rtl');
+      document.documentElement.classList.add('rtl');
     } else {
-        document.documentElement.classList.remove('rtl');
+      document.documentElement.classList.remove('rtl');
     }
   }, [lang]);
 

@@ -71,7 +71,7 @@ export const About = () => {
         </h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.8rem" }}>
           {competencies.map((skill, index) => (
-             <SkillTag key={skill.title} title={skill.title} description={skill.description} index={index} />
+             <SkillTag key={index} title={skill.title} description={skill.description} index={index} />
           ))}
         </div>
       </section>

@@ -68,7 +68,7 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
           <MascotFace size={32} color={isOverlay ? '#faf6ee' : 'var(--ink)'} />
         )}
         <span className="sketch-font text-lg md:text-xl font-bold" style={{ color: isOverlay ? '#faf6ee' : 'var(--ink)' }}>
-          Rakeeeeeen
+          {t('brandName')}
         </span>
       </Link>
 

@@ -5,6 +5,8 @@ import { MascotFace } from '../components/ui/MascotFace';
 import { SketchyButton } from '../components/ui/SketchyButton';
 import { db } from '../services/firebase.service';
 import { collection, addDoc, serverTimestamp, doc, updateDoc, increment, getDoc, setDoc } from 'firebase/firestore';
+import emailjs from '@emailjs/browser';
+
 
 /* ─── Sketchy inline toast ─────────────────────── */
 const SketchyToast = ({ message, type, onClose }: { message: string; type: 'error' | 'warn'; onClose: () => void }) => (
@@ -90,6 +92,31 @@ export const Contact = () => {
         createdAt: serverTimestamp(),
         read: false
       });
+
+      // 2. Send email via EmailJS (if configured)
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (serviceId && templateId && publicKey) {
+        try {
+          await emailjs.send(
+            serviceId,
+            templateId,
+            {
+              name: formData.name,
+              email: formData.email,
+              message: formData.message,
+              title: "رسالة جديدة من الموقع", // ليتوافق مع {{title}} في موضوع الإيميل عندك
+              to_name: resolveField(siteConfig.name),
+            },
+            publicKey
+          );
+        } catch (emailError) {
+          console.warn("Firebase save succeeded, but email sending failed:", emailError);
+        }
+      }
+
 
       try {
         const ref = doc(db, 'analytics', 'main');
