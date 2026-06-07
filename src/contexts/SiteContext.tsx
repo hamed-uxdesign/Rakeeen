@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SITE_CONFIG as DEFAULT_CONFIG, PROJECTS as DEFAULT_PROJECTS, TIMELINE as DEFAULT_TIMELINE, COMPETENCIES as DEFAULT_COMPETENCIES } from '../utils/constants';
-import { Project, TimelineItem, Competency } from '../types';
+import { SITE_CONFIG as DEFAULT_CONFIG, PROJECTS as DEFAULT_PROJECTS, TIMELINE as DEFAULT_TIMELINE, COMPETENCIES as DEFAULT_COMPETENCIES, DEFAULT_WORKFLOW_PHASES } from '../utils/constants';
+import { Project, TimelineItem, Competency, WorkflowPhase } from '../types';
 import { db } from '../services/firebase.service';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 
@@ -25,12 +25,14 @@ interface SiteContextType {
   competencies: Competency[];
   inquiries: Inquiry[];
   settings: UISettings;
+  workflowPhases: WorkflowPhase[];
   syncComplete: boolean;
   isInitialLoad: boolean;
   updateConfig: (config: Partial<typeof DEFAULT_CONFIG>) => void;
   updateProjects: (projects: Project[]) => void;
   updateTimeline: (timeline: TimelineItem[]) => void;
   updateCompetencies: (competencies: Competency[]) => void;
+  updateWorkflowPhases: (phases: WorkflowPhase[]) => void;
   updateSettings: (settings: Partial<UISettings>) => void;
   addInquiry: (inquiry: Omit<Inquiry, 'id' | 'date' | 'status'>) => void;
   markInquiryRead: (id: string) => void;
@@ -44,6 +46,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
   const [projects, setProjects] = useState(DEFAULT_PROJECTS);
   const [timeline, setTimeline] = useState(DEFAULT_TIMELINE);
   const [competencies, setCompetencies] = useState(DEFAULT_COMPETENCIES);
+  const [workflowPhases, setWorkflowPhases] = useState<WorkflowPhase[]>(DEFAULT_WORKFLOW_PHASES);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [syncComplete, setSyncComplete] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -92,6 +95,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
         if (data.projects) setProjects(data.projects);
         if (data.timeline) setTimeline(data.timeline);
         if (data.competencies) setCompetencies(data.competencies);
+        if (data.workflowPhases) setWorkflowPhases(data.workflowPhases);
         
         // Respect Firestore defaults ONLY if no local manual override exists
         if (data.settings && !localStorage.getItem('visitor_settings')) {
@@ -103,6 +107,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
           projects: DEFAULT_PROJECTS,
           timeline: DEFAULT_TIMELINE,
           competencies: DEFAULT_COMPETENCIES,
+          workflowPhases: DEFAULT_WORKFLOW_PHASES,
           settings: { showCursor: true, theme: 'dark' }
         };
         setDoc(docRef, initialData);
@@ -122,6 +127,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
   const updateProjects = (newProjects: Project[]) => setProjects(newProjects);
   const updateTimeline = (newTimeline: TimelineItem[]) => setTimeline(newTimeline);
   const updateCompetencies = (newCompetencies: Competency[]) => setCompetencies(newCompetencies);
+  const updateWorkflowPhases = (newPhases: WorkflowPhase[]) => setWorkflowPhases(newPhases);
   const updateSettings = (newSettings: Partial<UISettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }));
   };
@@ -150,6 +156,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
       projects,
       timeline,
       competencies,
+      workflowPhases,
       inquiries,
       settings,
       syncComplete,
@@ -157,6 +164,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
       updateProjects,
       updateTimeline,
       updateCompetencies,
+      updateWorkflowPhases,
       updateSettings,
       addInquiry,
       markInquiryRead,

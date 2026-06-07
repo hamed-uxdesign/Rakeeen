@@ -7,6 +7,8 @@ import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { About } from './pages/About';
+import { Workflow } from './pages/Workflow';
+import { WorkflowAdmin } from './pages/WorkflowAdmin';
 import { NotFound } from './pages/NotFound';
 import { Offline } from './pages/Offline';
 import { CustomCursor } from './components/ui/CustomCursor';
@@ -170,7 +172,9 @@ export default function App() {
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/project/:id" element={<ProjectDetail />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/workflow" element={<Workflow />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/admin/workflow" element={<WorkflowAdmin />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>

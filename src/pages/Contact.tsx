@@ -2,230 +2,346 @@ import React, { useState } from 'react';
 import { useSiteContext } from '../contexts/SiteContext';
 import { useLang } from '../contexts/LangContext';
 import { MascotFace } from '../components/ui/MascotFace';
-import { SketchyButton } from '../components/ui/SketchyButton';
 import { db } from '../services/firebase.service';
-import { collection, addDoc, serverTimestamp, doc, updateDoc, increment, getDoc, setDoc } from 'firebase/firestore';
+import {
+  collection, addDoc, serverTimestamp,
+  doc, updateDoc, increment, getDoc, setDoc,
+} from 'firebase/firestore';
 import emailjs from '@emailjs/browser';
 
-
-/* ─── Sketchy inline toast ─────────────────────── */
-const SketchyToast = ({ message, type, onClose }: { message: string; type: 'error' | 'warn'; onClose: () => void }) => (
-  <div
-    style={{
-      background: type === 'error' ? 'var(--rust)' : 'var(--sepia)',
-      color: 'white',
-      fontFamily: 'var(--font-sketch)',
-      fontSize: '0.95rem',
-      fontWeight: 700,
-      fontStyle: 'normal',
-      padding: '0.8rem 1.2rem',
-      borderRadius: '4px 16px 4px 16px',
-      boxShadow: '4px 5px 0 rgba(0,0,0,0.2)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: '1rem',
-      marginTop: '1rem',
-      animation: 'fadeIn 0.3s ease',
-    }}
-  >
-    <span>✕&nbsp; {message}</span>
-    <button
-      onClick={onClose}
-      style={{ background: 'transparent', border: 'none', color: 'white', fontSize: '1.1rem', cursor: 'pointer', lineHeight: 1, opacity: 0.8 }}
-    >×</button>
-  </div>
-);
+const fadeUp = (delay: number): React.CSSProperties => ({
+  opacity: 0,
+  transform: 'translateY(15px)',
+  animation: `cnt-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s forwards`,
+});
 
 export const Contact = () => {
   const { siteConfig } = useSiteContext();
-  const { t, resolveField, lang } = useLang();
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const { t, resolveField, lang } = useLang() as any;
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: 'error' | 'warn' } | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState('');
+  const isAr = lang === 'ar';
 
   React.useEffect(() => {
     document.title = `${t('contact')} | ${resolveField(siteConfig.name)}`;
   }, [t, resolveField, siteConfig.name]);
 
-  // Resolve contactForm fields from Firebase config, with fallbacks
   const cf = (siteConfig as any).contactForm;
-  const resolve = (field: any, fallback: string) => {
+  const res = (field: any, fallback: string) => {
     if (!field) return fallback;
     if (typeof field === 'string') return field;
     return field[lang] || field.en || fallback;
   };
 
-  const formHeading = resolve(cf?.heading, t('sendLetter'));
-  const formSubtitle = resolve(cf?.subtitle, t('oldSchool'));
-  const lblName = resolve(cf?.labelName, t('yourName'));
-  const lblEmail = resolve(cf?.labelEmail, t('yourEmail'));
-  const lblMessage = resolve(cf?.labelMessage, t('yourMessage'));
-  const phName = resolve(cf?.placeholderName, t('ph_name'));
-  const phEmail = resolve(cf?.placeholderEmail, t('ph_email'));
-  const phMessage = resolve(cf?.placeholderMessage, t('ph_message'));
-  const btnText = resolve(cf?.btnText, '');
-  const successHeading = resolve(cf?.successHeading, t('letterSent'));
-  const successBody = resolve(cf?.successBody, '');
-  const responseTime = resolve(cf?.responseTime, t('iRespond'));
-  const formEnabled = cf?.enabled !== false;
+  const lblName    = res(cf?.labelName,          t('yourName'));
+  const lblEmail   = res(cf?.labelEmail,         t('yourEmail'));
+  const lblMessage = res(cf?.labelMessage,       t('yourMessage'));
+  const phName     = res(cf?.placeholderName,    t('ph_name'));
+  const phEmail    = res(cf?.placeholderEmail,   t('ph_email'));
+  const phMessage  = res(cf?.placeholderMessage, t('ph_message'));
+  const btnLabel   = res(cf?.btnText,            '');
+  const successH   = res(cf?.successHeading,     t('letterSent'));
+  const successB   = res(cf?.successBody,        '');
+  const enabled    = cf?.enabled !== false;
 
-  // Extra contact info items from dashboard (array of { label, value, type })
-  const extraInfoItems: { label: any; value: string; type?: string }[] = cf?.extraInfo || [];
-
-  const showToast = (message: string, type: 'error' | 'warn' = 'error') => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 4000);
-  };
-
-  const handleSend = async () => {
-    if (!formData.name || !formData.email || !formData.message) {
-      showToast(t('fill_fields'), 'warn');
-      return;
+  const send = async () => {
+    if (!form.name || !form.email || !form.message) {
+      setErr(t('fill_fields')); setTimeout(() => setErr(''), 4000); return;
     }
-
-    setIsSubmitting(true);
+    setBusy(true);
     try {
-      await addDoc(collection(db, 'inquiries'), {
-        ...formData,
-        createdAt: serverTimestamp(),
-        read: false
-      });
-
-      // 2. Send email via EmailJS (if configured)
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-      if (serviceId && templateId && publicKey) {
+      await addDoc(collection(db, 'inquiries'), { ...form, createdAt: serverTimestamp(), read: false });
+      const [svc, tpl, pub] = [
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      ];
+      if (svc && tpl && pub) {
         try {
-          await emailjs.send(
-            serviceId,
-            templateId,
-            {
-              name: formData.name,
-              email: formData.email,
-              message: formData.message,
-              title: "رسالة جديدة من الموقع", // ليتوافق مع {{title}} في موضوع الإيميل عندك
-              to_name: resolveField(siteConfig.name),
-            },
-            publicKey
-          );
-        } catch (emailError) {
-          console.warn("Firebase save succeeded, but email sending failed:", emailError);
-        }
+          await emailjs.send(svc, tpl, {
+            name: form.name, email: form.email, message: form.message,
+            title: 'رسالة جديدة من الموقع', to_name: resolveField(siteConfig.name),
+          }, pub);
+        } catch (e) { console.warn('EmailJS', e); }
       }
-
-
       try {
         const ref = doc(db, 'analytics', 'main');
         const snap = await getDoc(ref);
-        if (snap.exists()) {
-          await updateDoc(ref, { inquiries: increment(1) });
-        } else {
-          await setDoc(ref, { totalVisits: 1, uniqueVisitors: 1, inquiries: 1 });
-        }
-      } catch (e) {
-        console.warn("Analytics tracking bypassed due to security rules.", e);
-      }
-
+        if (snap.exists()) await updateDoc(ref, { inquiries: increment(1) });
+        else await setDoc(ref, { totalVisits: 1, uniqueVisitors: 1, inquiries: 1 });
+      } catch (e) { console.warn('analytics', e); }
       setSent(true);
-    } catch (error: any) {
-      console.error("Error submitting form", error);
-      showToast(t('error_sending'), 'error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const labelStyle: React.CSSProperties = {
-    fontFamily: "var(--font-sketch)",
-    fontSize: "0.9rem",
-    color: "var(--ink-light)",
-    textTransform: "uppercase",
-    letterSpacing: "1px",
-    display: "block",
-    marginBottom: "0.3rem"
+    } catch (e) {
+      setErr(t('error_sending')); setTimeout(() => setErr(''), 4000);
+    } finally { setBusy(false); }
   };
 
   return (
-    <div className="page-container fade-in">
-      <section style={{ padding: "3rem 0 5rem", maxWidth: 700, margin: "0 auto" }}>
-        <h1 style={{ fontFamily: "var(--font-sketch)", fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, marginBottom: "0.5rem" }}>{formHeading}</h1>
-        <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--ink-faded)", marginBottom: "3rem" }}>{formSubtitle}</p>
+    <div style={{ background: 'var(--paper)', color: 'var(--ink)', minHeight: '100vh', overflowX: 'hidden' }}>
+      <style>{`
+        @keyframes cnt-up { to { opacity:1; transform:translateY(0); } }
 
-        {/* Postcard */}
-        <div style={{ background: "var(--cream)", border: "1.5px solid var(--ink-light)", borderRadius: "8px 30px 8px 30px", padding: "2.5rem 2rem", position: "relative", boxShadow: "6px 8px 0 rgba(42,32,24,0.1)" }}>
-          <div style={{ borderBottom: "1px dashed var(--ink-light)", paddingBottom: "1.5rem", marginBottom: "1.5rem" }}>
-            <p style={{ fontFamily: "var(--font-sketch)", fontSize: "1rem", color: "var(--ink-light)", marginBottom: "0.3rem" }}>{t('to')} {resolveField(siteConfig.name)}</p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", color: "var(--ink-light)" }}>{siteConfig.email}</p>
+        /* Full Width Spacious Layout */
+        .spacious-contact-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          width: 100%;
+        }
+
+        .name-email-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+
+        /* Custom Rectangular Block Input Fields (From Mockup) */
+        .premium-input-box {
+          position: relative;
+          background: rgba(34, 44, 7, 0.04);
+          border: 1px solid rgba(34, 44, 7, 0.08);
+          padding: 1rem 1.4rem;
+          display: flex;
+          flex-direction: column;
+          transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+        
+        body.dark .premium-input-box {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .premium-input-box:focus-within {
+          border-color: var(--ink);
+          background: rgba(34, 44, 7, 0.06);
+        }
+        body.dark .premium-input-box:focus-within {
+          border-color: var(--ink);
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        .premium-input-field {
+          width: 100%;
+          background: transparent !important;
+          border: none !important;
+          outline: none !important;
+          font-family: var(--font-body);
+          font-size: 1.05rem;
+          color: var(--ink);
+          padding: 0.35rem 0 0 0;
+          margin: 0;
+          border-radius: 0;
+        }
+
+        .premium-input-label {
+          font-family: var(--font-mono);
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--ink);
+          opacity: 0.45;
+          margin: 0;
+          padding: 0;
+          pointer-events: none;
+        }
+
+        /* Complete Auto-fill Overlay Removal */
+        .premium-input-field:-webkit-autofill,
+        .premium-input-field:-webkit-autofill:hover, 
+        .premium-input-field:-webkit-autofill:focus, 
+        .premium-input-field:-webkit-autofill:active {
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: var(--ink) !important;
+          transition: background-color 9999s ease-in-out 0s;
+          box-shadow: inset 0 0 20px 20px transparent !important;
+        }
+
+        @media (max-width: 768px) {
+          .name-email-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+          .page-container {
+            padding-top: 3.5rem !important;
+          }
+        }
+      `}</style>
+
+      <div className="page-container" style={{ paddingTop: '6.5rem', paddingBottom: '7rem' }}>
+        <div className="spacious-contact-container">
+          
+          {/* ── Spacious Title Area ── */}
+          <div style={{ borderBottom: '1.5px solid var(--ink)', paddingBottom: '2.5rem', marginBottom: '4rem' }}>
+            <p style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.68rem',
+              fontWeight: 700,
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase',
+              color: 'var(--ink)',
+              opacity: 0.4,
+              marginBottom: '1rem',
+              ...fadeUp(0.05),
+            }}>
+              {isAr ? 'تواصل معي' : 'Say heyy !'}
+            </p>
+            <h1 style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(2.5rem, 7.5vw, 6rem)',
+              fontWeight: 900,
+              textTransform: 'uppercase',
+              letterSpacing: '-0.03em',
+              lineHeight: 0.9,
+              color: 'var(--ink)',
+              ...fadeUp(0.1),
+            }}>
+              {isAr ? 'لنبدأ العمل معاً' : 'for meeeeee'}
+            </h1>
           </div>
 
-          {!formEnabled ? (
-            <div style={{ textAlign: "center", padding: "2rem 0", opacity: 0.5 }}>
-              <p style={{ fontFamily: "var(--font-sketch)", fontSize: "1.5rem" }}>
-                {lang === 'ar' ? 'نموذج التواصل غير متاح حالياً' : lang === 'it' ? 'Modulo non disponibile' : 'Contact form is currently unavailable.'}
-              </p>
-            </div>
-          ) : !sent ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              <div>
-                <label style={labelStyle}>{lblName}</label>
-                <input className="input-line" placeholder={phName} value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} disabled={isSubmitting} />
-              </div>
-              <div>
-                <label style={labelStyle}>{lblEmail}</label>
-                <input className="input-line" type="email" placeholder={phEmail} value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} disabled={isSubmitting} />
-              </div>
-              <div>
-                <label style={labelStyle}>{lblMessage}</label>
-                <textarea className="input-line" placeholder={phMessage} value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} disabled={isSubmitting} />
-              </div>
-
-              {/* Custom inline toast — replaces native alert() */}
-              {toast && <SketchyToast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
-
-              <div style={{ display: "flex", alignItems: "center", gap: "2rem", marginTop: "1rem" }}>
-                <button className="wax-btn" onClick={handleSend} disabled={isSubmitting} style={{ opacity: isSubmitting ? 0.7 : 1 }}>
-                  {isSubmitting ? '...' : <span dangerouslySetInnerHTML={{ __html: btnText || t('send_it') }} />}
-                </button>
-                <div>
-                  <p style={{ fontFamily: "var(--font-sketch)", fontSize: "1rem", color: "var(--ink-faded)" }}>{t('pressWax')}</p>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.85rem", fontStyle: "italic", color: "var(--ink-light)" }}>{responseTime}</p>
+          {/* ── Form Section ── */}
+          {enabled && (
+            <div style={{ ...fadeUp(0.18) }}>
+              {sent ? (
+                /* Spacious Success Message */
+                <div style={{
+                  border: '1.5px solid var(--ink)',
+                  background: 'var(--paper-dark)',
+                  padding: '4rem 2rem',
+                  textAlign: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '1.5rem',
+                  animation: 'cnt-up 0.5s ease-out forwards'
+                }}>
+                  <MascotFace size={60} color="var(--ink)" />
+                  <h2 style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '1.8rem',
+                    fontWeight: 900,
+                    textTransform: 'uppercase',
+                    color: 'var(--ink)',
+                    margin: 0
+                  }}>
+                    {successH}
+                  </h2>
+                  <p style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.98rem',
+                    color: 'var(--ink-faded)',
+                    lineHeight: 1.6,
+                    margin: 0,
+                    maxWidth: '450px'
+                  }}>
+                    {successB || t('illGetBack').replace('{name}', form.name)}
+                  </p>
+                  <button
+                    type="button"
+                    className="btn-brutalist"
+                    style={{ marginTop: '1.5rem', fontFamily: 'var(--font-mono)' }}
+                    onClick={() => { setSent(false); setForm({ name: '', email: '', message: '' }); }}
+                  >
+                    {t('sendAnother')}
+                  </button>
                 </div>
-              </div>
-            </div>
-          ) : (
-            <div style={{ textAlign: "center", padding: "2rem 0" }}>
-              <div style={{ display: 'flex', justifyContent: 'center' }}><MascotFace size={80} color="var(--forest)" /></div>
-              <h3 style={{ fontFamily: "var(--font-sketch)", fontSize: "2rem", color: "var(--forest)", marginTop: "1rem" }}>{successHeading}</h3>
-              <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", color: "var(--ink-faded)" }}>{successBody || t('illGetBack', { name: formData.name })}</p>
-              <SketchyButton style={{ marginTop: '2rem' }} onClick={() => { setSent(false); setFormData({ name: '', email: '', message: '' }); }}>{t('sendAnother')}</SketchyButton>
-            </div>
-          )}
-        </div>
-
-        <hr className="sketch-divider" />
-
-        {/* Extra info items (phone, address, etc.) from Firebase */}
-        <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
-          {extraInfoItems.filter(item => item.value).map((item, i) => (
-            <div key={i}>
-              <p style={{ fontFamily: "var(--font-sketch)", fontSize: "0.9rem", color: "var(--ink-light)", textTransform: "uppercase" }}>
-                {resolve(item.label, '')}
-              </p>
-              {item.type === 'phone' ? (
-                <a href={`tel:${item.value}`} style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--sepia)", textDecoration: 'none' }}>{item.value}</a>
-              ) : item.type === 'link' ? (
-                <a href={item.value} target="_blank" rel="noreferrer" style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--sepia)", textDecoration: 'none' }}>{item.value}</a>
               ) : (
-                <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--sepia)" }}>{item.value}</p>
+                /* Full Width Custom Block Fields wrapped in a form element */
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    send();
+                  }}
+                  style={{ display: 'flex', flexDirection: 'column' }}
+                >
+                  
+                  {/* Grid for Name & Email */}
+                  <div className="name-email-grid">
+                    <div className="premium-input-box">
+                      <label className="premium-input-label">{lblName}</label>
+                      <input
+                        className="premium-input-field"
+                        placeholder={phName}
+                        value={form.name}
+                        onChange={e => setForm({ ...form, name: e.target.value })}
+                        disabled={busy}
+                        autoComplete="off"
+                        data-lpignore="true"
+                      />
+                    </div>
+
+                    <div className="premium-input-box">
+                      <label className="premium-input-label">{lblEmail}</label>
+                      <input
+                        className="premium-input-field"
+                        type="email"
+                        placeholder={phEmail}
+                        value={form.email}
+                        onChange={e => setForm({ ...form, email: e.target.value })}
+                        disabled={busy}
+                        autoComplete="off"
+                        data-lpignore="true"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Message Block Input */}
+                  <div className="premium-input-box" style={{ marginBottom: '1.5rem' }}>
+                    <label className="premium-input-label">{lblMessage}</label>
+                    <textarea
+                      className="premium-input-field"
+                      style={{ minHeight: '160px', resize: 'vertical' }}
+                      placeholder={phMessage}
+                      value={form.message}
+                      onChange={e => setForm({ ...form, message: e.target.value })}
+                      disabled={busy}
+                      autoComplete="off"
+                      data-lpignore="true"
+                    />
+                  </div>
+
+                  {/* Errors */}
+                  {err && (
+                    <p style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      color: 'var(--rust)',
+                      marginBottom: '1.5rem'
+                    }}>
+                      [ERROR] : {err.toUpperCase()}
+                    </p>
+                  )}
+
+                  {/* CTA Submit Button */}
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
+                    <button
+                      type="submit"
+                      className="btn-brutalist"
+                      disabled={busy}
+                      style={{ 
+                        opacity: busy ? 0.55 : 1, 
+                        minWidth: '220px', 
+                        fontFamily: 'var(--font-mono)', 
+                        textTransform: 'uppercase',
+                        padding: '1.2rem 3rem',
+                        fontSize: '0.9rem'
+                      }}
+                    >
+                      {busy ? 'SENDING...' : <span dangerouslySetInnerHTML={{ __html: btnLabel || t('send_it') }} />}
+                    </button>
+                  </div>
+
+                </form>
               )}
             </div>
-          ))}
+          )}
+
         </div>
-      </section>
+      </div>
     </div>
   );
 };

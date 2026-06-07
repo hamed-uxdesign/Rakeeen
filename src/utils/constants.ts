@@ -1,4 +1,4 @@
-import { Project, TimelineItem, Competency } from '../types';
+import { Project, TimelineItem, Competency, WorkflowPhase } from '../types';
 
 export const SITE_CONFIG = {
   name: { en: "Hamed Walid", ar: "حامد وليد", it: "Hamed Walid" },
@@ -16,7 +16,7 @@ export const SITE_CONFIG = {
     ar: "مصمم تجربة المستخدم بخبرة +3 سنين في تحويل تعقيدات البيزنس لتصاميم سهلة الاستخدام. رحلتي بدأت من الجرافيك ديزاين لحد بناء منتجات رقمية في مصر والسعودية، ومبدئي دايماً البساطة بستخدم الـ AI عشان أسرع الـ Prototyping والتسليم لـ 10 أضعاف، عشان أضمن إن كل بكسل له هدف، وكل رحلة للمستخدم تكون سلسة ومن غير مجهود"
   },
   heroHeadline: {
-    en: "Designing For human ... With Ai",
+    en: "Designing for Human with AI",
     ar: "بصمم للناس ... بالذكاء الاصطناعي",
     it: "Progettare per l'uomo... con l'IA"
   },
@@ -136,4 +136,57 @@ export const COMPETENCIES: Competency[] = [
   { title: { en: "Logical Thinking", ar: "تفكير منطقي", it: "Pensiero Logico" } },
   { title: { en: "Rapid Prototyping", ar: "البناء السريع", it: "Prototipazione Rapida" } },
   { title: { en: "Team Player", ar: "شغل الفريق", it: "Lavoro Squadra" } }
+];
+
+export const DEFAULT_WORKFLOW_PHASES: WorkflowPhase[] = [
+  {
+    en_title: '01 · Pure UX & Logic',
+    ar_title: '01 · التخطيط وتجربة المستخدم',
+    en_sub: 'Brainstorming & User Flows',
+    ar_sub: 'العصف الذهني والمسارات',
+    en_desc: "We map the user's journey before writing a single line of code. Wireframes, flows, and early testing keep the idea sharp and the direction clear.",
+    ar_desc: 'نرسم رحلة المستخدم قبل أي كود. أسكيشات سريعة واختبار مبكر يحفظ الوقت ويوضح الاتجاه.',
+    en_skills: 'User Flows · Wireframes · Usability Testing',
+    ar_skills: 'مسارات المستخدم · الهياكل السلكية · اختبار التجربة',
+  },
+  {
+    en_title: '02 · UI & Figma Engineering',
+    ar_title: '02 · تصميم الواجهات والنظام',
+    en_sub: 'Design Tokens & Architecture',
+    ar_sub: 'المتغيرات والمكونات المرنة',
+    en_desc: "Flows become high-fidelity screens. Every component lives in a design system that mirrors production code — consistent, scalable, and handoff-ready.",
+    ar_desc: 'المسارات تتحول لشاشات دقيقة. كل مكوّن في نظام تصميم متكامل يشبه الكود الحقيقي، جاهز للتسليم.',
+    en_skills: 'Figma Auto-Layout · Design Tokens · Edge Cases',
+    ar_skills: 'Auto Layout · نظام التصميم · الحالات الخاصة',
+  },
+  {
+    en_title: '03 · Agentic Vibe Coding',
+    ar_title: '03 · التنفيذ البرمجي الذكي',
+    en_sub: 'Figma to React & TailwindCSS',
+    ar_sub: 'من فيجما إلى كود نظيف',
+    en_desc: "Design becomes semantic React with Tailwind. Clean state, responsive layouts, and global accessibility baked in from the start.",
+    ar_desc: 'التصميم يتحول لكود React & Tailwind نظيف. تجاوب كامل ومعايير وصول عالمية من البداية.',
+    en_skills: 'React · Tailwind CSS · Accessibility (a11y)',
+    ar_skills: 'React · Tailwind · معايير الوصول',
+  },
+  {
+    en_title: '04 · Visual & Code QA',
+    ar_title: '04 · مراجعة الجودة والفحص',
+    en_sub: 'Linters & Layout Audits',
+    ar_sub: 'التطابق البصري وفحص الأخطاء',
+    en_desc: "Every pixel is checked against the design. Automated linters run to catch issues early — the result is a fast, bug-free, production-ready product.",
+    ar_desc: 'كل بكسل يُقارن بالتصميم. أدوات الفحص تلتقط الأخطاء مبكراً للخروج بمنتج سريع وخالٍ من الأعطال.',
+    en_skills: 'Design Parity · Code Standards · Performance',
+    ar_skills: 'التطابق البصري · معايير الكود · الأداء',
+  },
+  {
+    en_title: '05 · Handover & Analytics',
+    ar_title: '05 · التسليم والتحليلات',
+    en_sub: 'Backend Ready Components',
+    ar_sub: 'كود موثق جاهز للربط',
+    en_desc: "User behavior analytics are embedded. The codebase is handed over documented, structured, and backend-ready for smooth developer integration.",
+    ar_desc: 'نُدمج تحليلات سلوك المستخدم ونسلّم الكود موثقاً ومنظماً جاهزاً للربط بقاعدة البيانات.',
+    en_skills: 'Analytics · Technical Docs · API Integration',
+    ar_skills: 'تحليلات الأداء · التوثيق البرمجي · ربط API',
+  },
 ];

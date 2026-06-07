@@ -98,7 +98,7 @@ const UI_TRANSLATIONS: Translations = {
   meal_wireframes_fallback: { en: "Information architecture and low-fidelity prototypes.", ar: "هيكلة المعلومات ونماذج التصميم المبدئية.", it: "Architettura dell'informazione e prototipi a bassa fedeltà." },
   meal_ai_fallback: { en: "Leveraging AI prompts and tools to accelerate the design process and ensure consistency.", ar: "استخدام أدوات الذكاء الاصطناعي لتسريع التصميم وضمان الجودة.", it: "Utilizzo di strumenti IA per accelerare il processo e garantire coerenza." },
   hero_headline: { 
-    en: "Designing For human ... With Ai", 
+    en: "Designing for Human with AI", 
     ar: "بصمم للناس ... بالذكاء الاصطناعي", 
     it: "Progettare per l'uomo... con l'IA" 
   },

@@ -1,116 +1,227 @@
 import React from 'react';
 import { useSiteContext } from '../contexts/SiteContext';
 import { useLang } from '../contexts/LangContext';
-import { MascotFace } from '../components/ui/MascotFace';
 import { useNavigate } from 'react-router-dom';
-import { PolaroidCard } from '../components/ui/PolaroidCard';
-import { SketchyButton } from '../components/ui/SketchyButton';
-import { InteractiveGlow } from '../components/ui/InteractiveGlow';
-import { TypewriterText } from '../components/ui/TypewriterText';
+import { DotMatrixText } from '../components/ui/DotMatrixText';
+import { MascotFace } from '../components/ui/MascotFace';
+import { AIVectorTicker } from '../components/ui/AIVectorTicker';
 
+/* ──────────────────────────────────────────────────────────────
+   HeadlineFormatted
+   • Splits headline before "with / and / ..." → 2 lines
+   • Replaces the word "human" with a 5×7 dot-matrix SVG
+   ────────────────────────────────────────────────────────────── */
+const HeadlineFormatted: React.FC<{ text: string }> = ({ text }) => {
+
+  const renderChunk = (chunk: string, key: string): React.ReactNode => {
+    // We split by "human" or "ai" case-insensitively using regex
+    const regex = /(human|ai)/gi;
+    const parts = chunk.split(regex);
+    
+    return (
+      <React.Fragment key={key}>
+        {parts.map((part, i) => {
+          const lower = part.toLowerCase();
+          if (lower === 'human') {
+            return (
+              <span 
+                key={i} 
+                style={{
+                  textTransform: 'uppercase',
+                  fontWeight: 900,
+                  fontSize: '1em',
+                  color: 'var(--ink)',
+                }}
+              >
+                {part}
+              </span>
+            );
+          }
+          if (lower === 'ai') {
+            return (
+              <React.Fragment key={i}>
+                A
+                <DotMatrixText
+                  text="I"
+                  style={{
+                    height: '0.74em',          // Matches General Sans capital letters height perfectly
+                    width: 'auto',
+                    verticalAlign: 'baseline',  // Flow seamlessly along the text baseline
+                    position: 'relative',
+                    top: '-0.02em',             // Micro-adjust alignment to look completely integrated
+                    margin: '0 0.05em',
+                  }}
+                />
+              </React.Fragment>
+            );
+          }
+          return <React.Fragment key={i}>{part}</React.Fragment>;
+        })}
+      </React.Fragment>
+    );
+  };
+
+  const isAr = /[\u0600-\u06FF]/.test(text);
+  if (isAr) {
+    return <>{text}</>;
+  }
+
+  /* Split at natural break before "with / and / ..." */
+  const breakIdx = text.search(/\s+(with|and|\.\.\.)\s/i);
+
+  if (breakIdx === -1) {
+    return <>{renderChunk(text, 'full')}</>;
+  }
+
+  const line1 = text.slice(0, breakIdx).trim();
+  const line2 = text.slice(breakIdx).trim();
+
+  return (
+    <>
+      <span style={{ display: 'block' }}>{renderChunk(line1, 'l1')}</span>
+      <span style={{ display: 'block' }}>{renderChunk(line2, 'l2')}</span>
+    </>
+  );
+};
+
+/* ──────────────────────────────────────────────────────────────
+   Home
+   ────────────────────────────────────────────────────────────── */
 export const Home = () => {
-  const { siteConfig, isInitialLoad, setInitialLoadComplete } = useSiteContext();
-  const { t, resolveField } = useLang();
+  const { siteConfig, setInitialLoadComplete } = useSiteContext();
+  const { t, resolveField, lang } = useLang() as any;
   const navigate = useNavigate();
+
+  const isArabic = lang === 'ar';
 
   React.useEffect(() => {
     document.title = `${resolveField(siteConfig.name)} | UX Designer`;
-  }, [siteConfig, resolveField]);
+    // Instantly mark load complete on mount to ensure navbar & standard scroll behave correctly
+    if (setInitialLoadComplete) {
+      setInitialLoadComplete();
+    }
+  }, [siteConfig, resolveField, setInitialLoadComplete]);
+
+  /* staggered physical spring entrance (instant load with critically damped spring physics animation) */
+  const anim = (delay: number, y = 20): React.CSSProperties => ({
+    opacity: 0,
+    transform: `translateY(${y}px) scale(0.98)`,
+    animation: `physics-entrance 0.95s cubic-bezier(0.19, 1, 0.22, 1) ${delay}s forwards`,
+    willChange: 'opacity, transform',
+  });
+
+  /* content */
+  const headline   = resolveField((siteConfig as any).heroHeadline)      || t('hero_headline');
+  const subtitle   = resolveField((siteConfig as any).heroSubtitle)      || t('hero_subtitle');
+  const btnPrimary = resolveField((siteConfig as any).heroBtnPrimary)    || t('seeMyWork');
+  const btnAbout   = resolveField((siteConfig as any).heroBtnSecondary2) || t('knowMore');
+  const btnContact = resolveField((siteConfig as any).heroBtnSecondary1) || t('sayHello');
 
   return (
-    <div className="page-container fade-in" style={{ minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <section style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        alignItems: "center", 
-        textAlign: "center", 
-        padding: "2rem 0",
-        maxWidth: "800px",
-        width: "100%"
-      }}>
-        {/* Profile Image */}
-        <div style={{ 
-          width: 200, 
-          height: 200, 
-          borderRadius: "50%", 
-          border: "3px solid var(--sepia)", 
-          overflow: "hidden", 
-          background: "var(--paper-dark)", 
-          display: "flex", 
-          alignItems: "center", 
-          justifyContent: "center", 
-          boxShadow: "8px 10px 0 rgba(139,105,20,0.2)", 
-          marginBottom: "2.5rem",
-          opacity: isInitialLoad ? 0 : 1,
-          transform: isInitialLoad ? 'translateY(20px)' : 'translateY(0)',
-          transition: 'opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s'
-        }}>
-          {siteConfig.siteImages?.aboutPortrait ? (
-              <img src={siteConfig.siteImages.aboutPortrait} alt={resolveField(siteConfig.name)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          ) : (
-              <MascotFace size={130} />
-          )}
+    <div className="home-hero fade-in">
+      {/* Self-contained highly responsive spring physics animation keyframes */}
+      <style>{`
+        @keyframes physics-entrance {
+          0% {
+            opacity: 0;
+            transform: translateY(24px) scale(0.98);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
+
+      <section className="home-hero-inner">
+
+        {/* ── Portrait with Premium Bracket Vectors Frame ── */}
+        <div 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            gap: '1.5rem',
+            marginBottom: '2.5rem', 
+            width: '100%',
+            direction: 'ltr',
+            ...anim(0.02, 16) 
+          }}
+        >
+          {/* Left Vertical Standing Bracket */}
+          <svg width="14" height="64" viewBox="0 0 14 64" fill="none" style={{ color: 'var(--ink)', opacity: 0.8 }}>
+            <path d="M12 2 L2 8 L2 56 L12 62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </svg>
+
+          <div style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            border: '2px solid var(--ink)',
+            overflow: 'hidden',
+            background: 'var(--paper-dark)',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+          }}>
+            {siteConfig.siteImages?.aboutPortrait ? (
+              <img 
+                src={siteConfig.siteImages.aboutPortrait} 
+                alt="Hamed" 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+              />
+            ) : (
+              <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <MascotFace size={48} color="var(--ink)" />
+              </div>
+            )}
+          </div>
+
+          {/* Right Vertical Standing Bracket */}
+          <svg width="14" height="64" viewBox="0 0 14 64" fill="none" style={{ color: 'var(--ink)', opacity: 0.8 }}>
+            <path d="M2 2 L12 8 L12 56 L2 62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </svg>
         </div>
 
-        {/* Headline */}
-        <h1 className="responsive-headline" style={{ 
-          fontFamily: "var(--font-sketch)", 
-          fontSize: "clamp(2rem, 7vw, 4.2rem)", 
-          fontWeight: 700, 
-          lineHeight: 1.1, 
-          color: "var(--ink)", 
-          marginBottom: "1.5rem",
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          textAlign: "center"
-        }}>
-          <TypewriterText 
-            text={resolveField((siteConfig as any).heroHeadline) || t('hero_headline', { default: 'Designing for human' })} 
-            delay={0.3} 
-            speed={70} 
-            onComplete={setInitialLoadComplete} 
-            skipAnimation={!isInitialLoad}
-          />
+        {/* ── Headline (Elegant size & font weight precisely matching UX Pilot, rendered instantly!) ── */}
+        <h1
+          className={`home-headline ${isArabic ? 'home-headline--ar' : ''}`}
+          style={anim(0.18, 44)}
+        >
+          <HeadlineFormatted text={headline} />
         </h1>
 
-        {/* Subtitle */}
-        <p style={{ 
-          fontFamily: "var(--font-body)", 
-          fontSize: "clamp(1.1rem, 2vw, 1.3rem)", 
-          lineHeight: 1.6, 
-          color: "var(--ink-faded)", 
-          marginBottom: "3rem",
-          maxWidth: "650px",
-          fontStyle: "normal",
-          opacity: isInitialLoad ? 0 : 1,
-          transform: isInitialLoad ? 'translateY(20px)' : 'translateY(0)',
-          transition: 'opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s'
-        }}>
-          {resolveField((siteConfig as any).heroSubtitle) || t('hero_subtitle', { default: "I'm Hamid Waleed. I'm a UX designer for three years ago" })}
+        {/* ── Subtitle (Description) ── */}
+        <p
+          className={`home-subtitle ${isArabic ? 'home-subtitle--ar' : ''}`}
+          style={{
+            ...anim(0.32, 16),
+            marginTop: '1.2rem',
+            marginBottom: '3rem',
+          }}
+        >
+          {subtitle}
         </p>
 
-        {/* CTAs */}
-        <div className="hero-cta" style={{ 
-          display: "flex", 
-          gap: "1.5rem", 
-          flexWrap: "wrap", 
-          justifyContent: "center",
-          opacity: isInitialLoad ? 0 : 1,
-          transform: isInitialLoad ? 'translateY(20px)' : 'translateY(0)',
-          transition: 'opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s'
-        }}>
-          <SketchyButton filled onClick={() => navigate("/projects")}>
-              {resolveField((siteConfig as any).heroBtnPrimary) || t('seeMyWork', { default: 'See my work' })}
-          </SketchyButton>
-          <SketchyButton onClick={() => navigate("/about")}>
-              {resolveField((siteConfig as any).heroBtnSecondary2) || t('knowMore', { default: 'Know more about me' })}
-          </SketchyButton>
-          <SketchyButton onClick={() => navigate("/contact")}>
-              {resolveField((siteConfig as any).heroBtnSecondary1) || t('sayHello', { default: 'Say hello' })}
-          </SketchyButton>
+        {/* ── Workflow Entrance CTA Button ── */}
+        <div className="home-cta-group" style={anim(0.44, 12)}>
+          <button
+            id="home-cta-workflow"
+            className="btn-brutalist"
+            onClick={() => navigate('/workflow')}
+            style={{ padding: '1.2rem 3rem', minWidth: '280px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem' }}
+          >
+            {isArabic ? 'منهجية وتدفق العمل المهني' : 'HOW I THINK & WORK'}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isArabic ? 'rotate(180deg)' : 'none' }}>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
         </div>
       </section>
+
+      {/* ── AI Vector DNA Animation Ticker (Exactly positioned at bottom) ── */}
+      <div style={{ width: '100vw', marginTop: '4.5rem' }}>
+        <AIVectorTicker />
+      </div>
     </div>
   );
 };

@@ -24,12 +24,12 @@ export interface Project {
   id: string;
   title: LocalizedField;
   subtitle?: LocalizedField;
-  description: LocalizedField;
-  tags: LocalizedField[];
-  image: string;
+  description?: LocalizedField;
+  tags?: LocalizedField[];
+  image?: string;
   detailImages?: string[];
   gallery?: GalleryImage[];
-  category: LocalizedField;
+  category?: LocalizedField;
   featured?: boolean;
   link?: string;
   github?: string;
@@ -53,11 +53,22 @@ export interface TimelineItem {
   role: LocalizedField;
   company: LocalizedField;
   description: LocalizedField;
-  tags: LocalizedField[];
+  tags?: LocalizedField[];
 }
 
 export interface Competency {
   title: LocalizedField;
-  description: LocalizedField;
-  icon: string;
+  description?: LocalizedField;
+  icon?: string;
+}
+
+export interface WorkflowPhase {
+  en_title: string;
+  ar_title: string;
+  en_sub: string;
+  ar_sub: string;
+  en_desc: string;
+  ar_desc: string;
+  en_skills: string;
+  ar_skills: string;
 }
