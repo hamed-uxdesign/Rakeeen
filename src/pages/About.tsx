@@ -57,6 +57,23 @@ export const About = () => {
           padding-left: 2.5rem;
           margin-top: 4rem;
         }
+
+        /* About bio grid responsive */
+        .about-bio-grid {
+          display: grid;
+          gap: 4rem;
+          align-items: start;
+        }
+        @media (max-width: 768px) {
+          .about-bio-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2.5rem;
+          }
+          .about-bio-grid .about-portrait-card {
+            max-width: 240px;
+            margin: 0 auto;
+          }
+        }
         html[dir="rtl"] .journey-container {
           padding-left: 0;
           padding-right: 2.5rem;
@@ -190,11 +207,9 @@ export const About = () => {
 
         {/* ── Bio / Intro (First Section: kept direct & premium) ── */}
         <div
+          className="about-bio-grid"
           style={{
-            display: 'grid',
             gridTemplateColumns: siteConfig.siteImages?.aboutPortrait ? '1fr 280px' : '1fr',
-            gap: '4rem',
-            alignItems: 'start',
             marginBottom: '6rem',
             ...fadeUp(0.18),
           }}
@@ -236,7 +251,7 @@ export const About = () => {
 
           {/* Portrait card */}
           {siteConfig.siteImages?.aboutPortrait && (
-            <div style={{
+            <div className="about-portrait-card" style={{
               border: '1.5px solid var(--ink)',
               padding: '0.6rem',
               background: 'var(--paper-dark)',

@@ -324,10 +324,11 @@ export const Contact = () => {
                       disabled={busy}
                       style={{ 
                         opacity: busy ? 0.55 : 1, 
-                        minWidth: '220px', 
+                        minWidth: '180px',
+                        maxWidth: '100%',
                         fontFamily: 'var(--font-mono)', 
                         textTransform: 'uppercase',
-                        padding: '1.2rem 3rem',
+                        padding: '1.2rem 2.5rem',
                         fontSize: '0.9rem'
                       }}
                     >

@@ -168,9 +168,7 @@ export const Workflow = () => {
           gap: 0 3rem;
           position: relative;
         }
-        html[dir="rtl"] .wf-cols {
-          grid-template-columns: 1fr 52px;
-        }
+        /* CSS Grid already handles RTL visual reordering — no column swap needed */
 
         .wf-sidebar-wrapper {
           position: relative;
@@ -208,14 +206,19 @@ export const Workflow = () => {
           white-space: nowrap;
         }
 
-        @media (max-width: 640px) {
-          .wf-step-box { padding: 1.6rem 1.4rem; }
-          .wf-cols { grid-template-columns: 36px 1fr; gap: 0 1.2rem; }
-          .wf-sidebar { gap: 1.2rem; }
+        @media (max-width: 768px) {
+          .wf-step-box { padding: 1.4rem 1.2rem; }
+          .wf-cols { grid-template-columns: 36px 1fr; gap: 0 1rem; }
+          .wf-sidebar { gap: 1rem; }
+        }
+        @media (max-width: 480px) {
+          .wf-step-box { padding: 1.2rem 1rem; }
+          .wf-cols { grid-template-columns: 1fr; gap: 0; }
+          .wf-sidebar-wrapper { display: none; }
         }
       `}</style>
 
-      <div className="page-container" style={{ paddingTop: '6rem', paddingBottom: '8rem', maxWidth: '820px', margin: '0 auto' }}>
+      <div className="page-container" style={{ paddingTop: '4rem', paddingBottom: '5rem', maxWidth: '820px', margin: '0 auto' }}>
 
         {/* ── Heading ── */}
         <div style={{ borderBottom: '1.5px solid var(--ink)', paddingBottom: '2.5rem', marginBottom: '3.5rem', ...fadeUp(0.05) }}>
@@ -292,9 +295,9 @@ export const Workflow = () => {
                   display: 'flex',
                   alignItems: 'flex-start',
                   justifyContent: 'space-between',
-                  gap: '1.5rem',
+                  gap: '1rem',
                   marginBottom: '1rem',
-                  flexDirection: isAr ? 'row-reverse' : 'row',
+                  flexWrap: 'wrap' as any,
                 }}>
                   <h2 style={{
                     fontFamily: 'var(--font-display)',
@@ -361,14 +364,14 @@ export const Workflow = () => {
           }}>
             {isAr ? 'اكتشف المزيد من الملف المهني' : 'CONTINUE THE JOURNEY'}
           </p>
-          <div style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <button className="btn-brutalist" onClick={() => navigate('/projects')} style={{ minWidth: '180px', fontFamily: 'var(--font-mono)' }}>
+          <div style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
+            <button className="btn-brutalist" onClick={() => navigate('/projects')} style={{ flex: '1 1 160px', maxWidth: '220px', fontFamily: 'var(--font-mono)' }}>
               {isAr ? 'أعمالي' : 'MY WORK ?'}
             </button>
-            <button className="btn-brutalist btn-brutalist--outline" onClick={() => navigate('/about')} style={{ minWidth: '180px', fontFamily: 'var(--font-mono)' }}>
+            <button className="btn-brutalist btn-brutalist--outline" onClick={() => navigate('/about')} style={{ flex: '1 1 160px', maxWidth: '220px', fontFamily: 'var(--font-mono)' }}>
               {isAr ? 'عني' : 'ABOUT ME'}
             </button>
-            <button className="btn-brutalist btn-brutalist--ghost" onClick={() => navigate('/contact')} style={{ minWidth: '180px', fontFamily: 'var(--font-mono)' }}>
+            <button className="btn-brutalist btn-brutalist--ghost" onClick={() => navigate('/contact')} style={{ flex: '1 1 160px', maxWidth: '220px', fontFamily: 'var(--font-mono)' }}>
               {isAr ? 'تواصل معي' : 'SAY HEYY !'}
             </button>
           </div>

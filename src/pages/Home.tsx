@@ -207,7 +207,7 @@ export const Home = () => {
             id="home-cta-workflow"
             className="btn-brutalist"
             onClick={() => navigate('/workflow')}
-            style={{ padding: '1.2rem 3rem', minWidth: '280px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem' }}
+            style={{ padding: '1.2rem 2.5rem', minWidth: '0', maxWidth: '100%', width: 'fit-content', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem' }}
           >
             {isArabic ? 'منهجية وتدفق العمل المهني' : 'HOW I THINK & WORK'}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isArabic ? 'rotate(180deg)' : 'none' }}>
