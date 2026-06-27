@@ -40,7 +40,7 @@ export const Projects = () => {
           letter-spacing: 0.1em;
           text-transform: uppercase;
           padding: 0.5rem 1.2rem;
-          border: 1.5px solid var(--ink);
+          border: 1px solid var(--border);
           background: transparent;
           color: var(--ink);
           cursor: pointer;
@@ -58,7 +58,7 @@ export const Projects = () => {
 
         /* Simplified modern grid card */
         .clean-proj-card {
-          border: 1.5px solid var(--ink);
+          border: 1px solid var(--border);
           background: var(--paper-dark);
           padding: 2rem;
           transition: transform 0.15s cubic-bezier(0.19,1,0.22,1), box-shadow 0.15s cubic-bezier(0.19,1,0.22,1);
@@ -91,7 +91,7 @@ export const Projects = () => {
       <div className="page-container" style={{ paddingTop: '5rem', paddingBottom: '6rem' }}>
         
         {/* ── Header ── */}
-        <div style={{ borderBottom: '2px solid var(--ink)', paddingBottom: '2rem', marginBottom: '3rem' }}>
+        <div style={{ borderBottom: '1px solid var(--border)', paddingBottom: '2rem', marginBottom: '3rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
             <div style={anim(0.05)}>
               <p style={{
@@ -182,7 +182,7 @@ export const Projects = () => {
                         background: 'var(--sepia)',
                         color: '#000000',
                         padding: '0.25rem 0.6rem',
-                        border: '1.5px solid var(--ink)'
+                        border: '1px solid var(--border)'
                       }}>
                         {resolveField(p.category)}
                       </span>
@@ -220,7 +220,7 @@ export const Projects = () => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   marginTop: '2rem',
-                  borderTop: '1.5px solid var(--ink)',
+                  borderTop: '1px solid var(--border)',
                   paddingTop: '1rem'
                 }}>
                   <span style={{
@@ -237,7 +237,7 @@ export const Projects = () => {
                   <div style={{
                     width: '32px',
                     height: '32px',
-                    border: '1.5px solid var(--ink)',
+                    border: '1px solid var(--border)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

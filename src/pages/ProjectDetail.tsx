@@ -68,9 +68,9 @@ export const ProjectDetail = () => {
         @keyframes pd-up { to { opacity:1; transform:translateY(0); } }
 
         .pd-acc-row {
-          border-top: 1px solid var(--ink);
+          border-top: 1px solid var(--border);
         }
-        .pd-acc-row:last-child { border-bottom: 1px solid var(--ink); }
+        .pd-acc-row:last-child { border-bottom: 1px solid var(--border); }
 
         .pd-acc-btn {
           width: 100%;
@@ -105,11 +105,11 @@ export const ProjectDetail = () => {
         .pd-metrics {
           display: grid;
           grid-template-columns: repeat(4,1fr);
-          border-top: 1px solid var(--ink);
+          border-top: 1px solid var(--border);
         }
         .pd-metric-cell {
           padding: 2rem 0 2rem;
-          border-inline-end: 1px solid var(--ink);
+          border-inline-end: 1px solid var(--border);
         }
         .pd-metric-cell:last-child { border-inline-end: none; }
 
@@ -117,17 +117,17 @@ export const ProjectDetail = () => {
           display: grid;
           grid-template-columns: 1fr 1.1fr;
           min-height: 400px;
-          border-top: 1px solid var(--ink);
+          border-top: 1px solid var(--border);
         }
         .pd-gallery-row.flipped { grid-template-columns: 1.1fr 1fr; }
 
         @media (max-width: 768px) {
           .pd-metrics { grid-template-columns: 1fr 1fr; }
           .pd-metric-cell:nth-child(2) { border-inline-end: none; }
-          .pd-metric-cell:nth-child(3) { border-top: 1px solid var(--ink); }
+          .pd-metric-cell:nth-child(3) { border-top: 1px solid var(--border); }
           .pd-gallery-row,
           .pd-gallery-row.flipped { grid-template-columns: 1fr; min-height: auto; }
-          .pd-gallery-text { border-inline-end: none !important; border-bottom: 1px solid var(--ink); }
+          .pd-gallery-text { border-inline-end: none !important; border-bottom: 1px solid var(--border); }
           .pd-nav-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
@@ -163,7 +163,7 @@ export const ProjectDetail = () => {
 
         {/* Title area */}
         <div style={{
-          borderBottom: '2px solid var(--ink)',
+          borderBottom: '1px solid var(--border)',
           paddingBottom: '2.5rem',
           marginBottom: '0',
           ...fadeUp(0.05),
@@ -226,7 +226,7 @@ export const ProjectDetail = () => {
                   color: 'var(--ink)',
                   textDecoration: 'none',
                   opacity: 0.55,
-                  border: '1px solid var(--ink)',
+                  border: '1px solid var(--border)',
                   padding: '0.35rem 0.8rem',
                   transition: 'opacity 0.12s',
                 }}
@@ -248,7 +248,7 @@ export const ProjectDetail = () => {
                   color: 'var(--ink)',
                   textDecoration: 'none',
                   opacity: 0.55,
-                  border: '1px solid var(--ink)',
+                  border: '1px solid var(--border)',
                   padding: '0.35rem 0.8rem',
                   transition: 'opacity 0.12s',
                 }}
@@ -285,7 +285,7 @@ export const ProjectDetail = () => {
           width: '100%',
           aspectRatio: '16/7',
           overflow: 'hidden',
-          borderTop: '2px solid var(--ink)',
+          borderTop: '1px solid var(--border)',
           marginTop: '3rem',
         }}>
           <img
@@ -298,7 +298,7 @@ export const ProjectDetail = () => {
 
       {/* ══ ALTERNATING GALLERY ══ */}
       {gallery.length > 0 && (
-        <div style={{ borderTop: '2px solid var(--ink)', marginTop: project.image ? 0 : '3rem' }}>
+        <div style={{ borderTop: '1px solid var(--border)', marginTop: project.image ? 0 : '3rem' }}>
           {gallery.slice(0, 3).map((img: { url: string; caption?: any }, i: number) => {
             const flip = i % 2 !== 0;
             const textBlock = (
@@ -309,8 +309,8 @@ export const ProjectDetail = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
-                  borderInlineEnd: !flip ? '1px solid var(--ink)' : 'none',
-                  borderInlineStart: flip ? '1px solid var(--ink)' : 'none',
+                  borderInlineEnd: !flip ? '1px solid var(--border)' : 'none',
+                  borderInlineStart: flip ? '1px solid var(--border)' : 'none',
                 }}
               >
                 <span style={{ ...monoLabel, marginBottom: '1rem' }}>
@@ -345,7 +345,7 @@ export const ProjectDetail = () => {
               <div
                 key={i}
                 className={`pd-gallery-row${flip ? ' flipped' : ''}`}
-                style={{ borderBottom: i < Math.min(gallery.length, 3) - 1 ? '1px solid var(--ink)' : 'none' }}
+                style={{ borderBottom: i < Math.min(gallery.length, 3) - 1 ? '1px solid var(--border)' : 'none' }}
               >
                 {flip ? <>{imgBlock}{textBlock}</> : <>{textBlock}{imgBlock}</>}
               </div>
@@ -427,7 +427,7 @@ export const ProjectDetail = () => {
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          borderTop: '2px solid var(--ink)',
+          borderTop: '1px solid var(--border)',
           marginTop: '4rem',
         }}
       >
@@ -438,7 +438,7 @@ export const ProjectDetail = () => {
           style={{
             paddingInlineStart: 'clamp(1rem,3vw,2.5rem)',
             paddingInlineEnd: 'clamp(1rem,3vw,2.5rem)',
-            borderInlineEnd: '1px solid var(--ink)',
+            borderInlineEnd: '1px solid var(--border)',
             opacity: prev ? 1 : 0.2,
             pointerEvents: prev ? 'auto' : 'none',
           }}

@@ -108,7 +108,7 @@ export const About = () => {
           width: 12px;
           height: 12px;
           border-radius: 50%;
-          border: 2.5px solid var(--ink);
+          border: 1px solid var(--border);
           background: var(--paper);
           z-index: 2;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -121,7 +121,7 @@ export const About = () => {
         /* Highlight node when scrolled to */
         .journey-step.active-step .journey-node {
           background: var(--ink);
-          border-color: var(--ink);
+          border-color: var(--border);
           transform: scale(1.4);
         }
 
@@ -177,7 +177,7 @@ export const About = () => {
       <div className="page-container" style={{ paddingTop: '5rem', paddingBottom: '7rem' }}>
 
         {/* ── Header (Simple, clean and beautiful) ── */}
-        <div style={{ borderBottom: '2px solid var(--ink)', paddingBottom: '2.5rem', marginBottom: '4rem' }}>
+        <div style={{ borderBottom: '1px solid var(--border)', paddingBottom: '2.5rem', marginBottom: '4rem' }}>
           <p style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.65rem',
@@ -233,7 +233,7 @@ export const About = () => {
               gap: '0.7rem',
               marginTop: '2.5rem',
               paddingTop: '1.2rem',
-              borderTop: '1px solid var(--ink)',
+              borderTop: '1px solid var(--border)',
             }}>
               <span style={{
                 fontFamily: 'var(--font-mono)',
@@ -252,7 +252,7 @@ export const About = () => {
           {/* Portrait card */}
           {siteConfig.siteImages?.aboutPortrait && (
             <div className="about-portrait-card" style={{
-              border: '1.5px solid var(--ink)',
+              border: '1px solid var(--border)',
               padding: '0.6rem',
               background: 'var(--paper-dark)',
               transform: 'rotate(-1deg)',

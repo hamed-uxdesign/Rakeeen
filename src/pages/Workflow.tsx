@@ -154,7 +154,7 @@ export const Workflow = () => {
 
         .wf-step-box {
           padding: 2.5rem 2.8rem;
-          border: 1.5px solid var(--ink);
+          border: 1px solid var(--border);
           background: var(--paper-dark);
           margin-bottom: 1.6rem;
           width: 100%;
@@ -200,7 +200,7 @@ export const Workflow = () => {
           color: var(--ink);
           opacity: 0.4;
           padding: 0.32rem 0.75rem;
-          border: 1px solid var(--ink);
+          border: 1px solid var(--border);
           flex-shrink: 0;
           margin-top: 0.1rem;
           white-space: nowrap;
@@ -221,7 +221,7 @@ export const Workflow = () => {
       <div className="page-container" style={{ paddingTop: '4rem', paddingBottom: '5rem', maxWidth: '820px', margin: '0 auto' }}>
 
         {/* ── Heading ── */}
-        <div style={{ borderBottom: '1.5px solid var(--ink)', paddingBottom: '2.5rem', marginBottom: '3.5rem', ...fadeUp(0.05) }}>
+        <div style={{ borderBottom: '1px solid var(--border)', paddingBottom: '2.5rem', marginBottom: '3.5rem', ...fadeUp(0.05) }}>
           <p style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.68rem',
@@ -332,7 +332,7 @@ export const Workflow = () => {
                 <div style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.65rem',
-                  borderTop: '1px dashed var(--ink)',
+                  borderTop: '1px dashed var(--border)',
                   paddingTop: '0.65rem',
                   color: 'var(--ink)',
                   opacity: 0.45,
@@ -346,7 +346,7 @@ export const Workflow = () => {
 
         {/* ── Bottom CTA ── */}
         <div style={{
-          borderTop: '2px solid var(--ink)',
+          borderTop: '1px solid var(--border)',
           paddingTop: '5rem',
           marginTop: '5rem',
           textAlign: 'center',

@@ -74,6 +74,9 @@
   --tag-bg-5: #C8D450; --tag-txt-5: #141900;  /* warm lime, near-black — 7:1 */
   --tag-bg-6: #C2DC3F; --tag-txt-6: #0D0D0D;  /* bright lime, black — max contrast */
 
+  /* ── BORDER TOKEN ── */
+  --border: var(--ink);
+
   /* ── BRUTALIST RADII: ZERO ── */
   --radius-organic: 0px;
   --radius-btn:     0px;
@@ -106,6 +109,7 @@ body.dark {
   --tape:       rgba(127, 155, 18, 0.12);
   --dot-color:  rgba(255, 255, 255, 0.08);
   --cream:      var(--paper-dark);
+  --border:     rgba(255, 255, 255, 0.2);
 
   --tag-bg-1: rgba(127, 155, 18, 0.15); --tag-txt-1: #D8EA6C;
   --tag-bg-2: rgba(127, 155, 18, 0.08); --tag-txt-2: #C8DC5A;
@@ -268,7 +272,7 @@ select:-webkit-autofill {
 /* ── THE BRUTALIST CARD ── */
 .hand-card {
   background: var(--paper-dark);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: 0;
   position: relative;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -291,7 +295,7 @@ select:-webkit-autofill {
   text-transform: uppercase;
   background: var(--sepia);
   color: var(--ink);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: 0;
   padding: 0.9rem 2.4rem;
   cursor: pointer;
@@ -318,7 +322,7 @@ select:-webkit-autofill {
 .btn-brutalist--outline {
   background: var(--paper-dark);
   color: var(--ink);
-  border-color: var(--ink);
+  border-color: var(--border);
 }
 .btn-brutalist--outline:hover {
   background: var(--paper-dark);
@@ -335,7 +339,7 @@ select:-webkit-autofill {
 .btn-brutalist--ghost {
   background: var(--paper-dark);
   color: var(--ink);
-  border-color: var(--ink);
+  border-color: var(--border);
 }
 .btn-brutalist--ghost:hover {
   background: var(--paper-dark);
@@ -356,7 +360,7 @@ select:-webkit-autofill {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.9rem 2.2rem;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: 0;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
@@ -382,7 +386,7 @@ select:-webkit-autofill {
 .m3-btn--outline {
   background: var(--paper-dark);
   color: var(--ink);
-  border-color: var(--ink);
+  border-color: var(--border);
 }
 .m3-btn--outline:hover {
   background: var(--paper-dark);
@@ -397,7 +401,7 @@ select:-webkit-autofill {
 .m3-btn--ghost {
   background: var(--paper-dark);
   color: var(--ink);
-  border-color: var(--ink);
+  border-color: var(--border);
 }
 .m3-btn--ghost:hover {
   background: var(--paper-dark);
@@ -418,7 +422,7 @@ select:-webkit-autofill {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   background: transparent;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: 0;
   padding: 0.8rem 1.8rem;
   cursor: pointer;
@@ -442,7 +446,7 @@ select:-webkit-autofill {
 .sketchy-btn.filled {
   background: var(--sepia);
   color: var(--ink);
-  border-color: var(--ink);
+  border-color: var(--border);
 }
 .sketchy-btn.filled:hover {
   background: var(--ink);
@@ -581,7 +585,7 @@ select:-webkit-autofill {
     width: 100%;
     justify-content: center;
     padding-top: 2rem;
-    border-top: 1px solid var(--ink);
+    border-top: 1px solid var(--border);
   }
 }
 @media (max-width: 600px) {
@@ -626,7 +630,7 @@ select:-webkit-autofill {
   transform: translateY(-50%);
   border-left: 3.5px solid transparent;
   border-right: 3.5px solid transparent;
-  border-top: 3.5px solid var(--ink);
+  border-top: 1px solid var(--border);
   opacity: 0.6;
 }
 .custom-select-options {
@@ -634,7 +638,7 @@ select:-webkit-autofill {
   top: 100%;
   inset-inline-end: 0;
   background: var(--paper-dark);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: 0;
   overflow: hidden;
   z-index: 1000;
@@ -880,7 +884,7 @@ select:-webkit-autofill {
 .polaroid {
   background: var(--paper-dark);
   padding: 12px 12px 36px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: 0;
   transform: rotate(var(--tilt, -1deg));
   transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -957,7 +961,7 @@ textarea.input-line { resize: none; border: none; border-bottom: 1px solid var(-
   text-align: center;
   padding: 1.5rem 1rem;
   background: var(--paper-dark);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: 0;
 }
 
@@ -970,7 +974,7 @@ textarea.input-line { resize: none; border: none; border-bottom: 1px solid var(-
 }
 .modal-box {
   background: var(--paper-dark);
-  border: 2px solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: 0;
   padding: 2.5rem;
   max-width: 500px; width: 100%;
@@ -986,7 +990,7 @@ textarea.input-line { resize: none; border: none; border-bottom: 1px solid var(-
   font-size: 0.85rem;
   line-height: 1.4;
   transform: rotate(var(--r, -1deg));
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border);
 }
 
 @media (max-width: 768px) {
@@ -1039,7 +1043,7 @@ textarea.input-line { resize: none; border: none; border-bottom: 1px solid var(-
 }
 
 .proj-page-header {
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 1px solid var(--border);
   padding-bottom: 2rem;
   margin-bottom: 2.5rem;
   display: flex;
@@ -1080,7 +1084,7 @@ textarea.input-line { resize: none; border: none; border-bottom: 1px solid var(-
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 0.42rem 1rem;
-  border: 1.5px solid var(--ink);
+  border: 1px solid var(--border);
   background: transparent;
   color: var(--ink);
   cursor: pointer;
@@ -1102,7 +1106,7 @@ body.dark .proj-filter-pill:hover {
 .proj-row-card {
   display: grid;
   grid-template-columns: 260px 1fr 64px;
-  border-top: 1.5px solid var(--ink);
+  border-top: 1px solid var(--border);
   cursor: pointer;
   transition: transform 0.14s cubic-bezier(0.19,1,0.22,1),
               box-shadow 0.14s cubic-bezier(0.19,1,0.22,1);
@@ -1111,7 +1115,7 @@ body.dark .proj-filter-pill:hover {
   min-height: 190px;
   background: var(--paper);
 }
-.proj-row-card:last-child { border-bottom: 1.5px solid var(--ink); }
+.proj-row-card:last-child { border-bottom: 1px solid var(--border); }
 .proj-row-card:hover {
   transform: translate(-4px, -4px);
   box-shadow: 6px 6px 0 0 var(--ink);
@@ -1127,14 +1131,14 @@ body.dark .proj-row-card:hover {
   min-height: 190px;
   object-fit: cover;
   display: block;
-  border-inline-end: 1.5px solid var(--ink);
+  border-inline-end: 1px solid var(--border);
 }
 .proj-row-img-box {
   min-height: 190px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-inline-end: 1.5px solid var(--ink);
+  border-inline-end: 1px solid var(--border);
   overflow: hidden;
 }
 .proj-row-body {
@@ -1200,7 +1204,7 @@ body.dark .proj-row-card:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-inline-start: 1.5px solid var(--ink);
+  border-inline-start: 1px solid var(--border);
   color: var(--ink);
   opacity: 0.25;
   transition: opacity 0.14s ease;
@@ -1213,8 +1217,8 @@ body.dark .proj-row-card:hover {
     grid-template-columns: 1fr;
     grid-template-rows: 160px auto;
   }
-  .proj-row-img { min-height: 160px; border-inline-end: none; border-bottom: 1.5px solid var(--ink); }
-  .proj-row-img-box { min-height: 160px; border-inline-end: none; border-bottom: 1.5px solid var(--ink); }
+  .proj-row-img { min-height: 160px; border-inline-end: none; border-bottom: 1px solid var(--border); }
+  .proj-row-img-box { min-height: 160px; border-inline-end: none; border-bottom: 1px solid var(--border); }
   .proj-row-arrow { display: none; }
   .proj-row-card { grid-template-columns: 1fr; }
 }
@@ -1228,7 +1232,7 @@ body.dark .proj-row-card:hover {
   }
   .pd-alt-row > div:first-child {
     border-inline-end: none !important;
-    border-bottom: 1px solid var(--ink);
+    border-bottom: 1px solid var(--border);
   }
 }
 

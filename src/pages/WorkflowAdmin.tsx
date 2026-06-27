@@ -118,7 +118,7 @@ export const WorkflowAdmin = () => {
     fontFamily: 'var(--font-body)',
     fontSize: '0.88rem',
     padding: '0.55rem 0.8rem',
-    border: '1.5px solid var(--ink)',
+    border: '1px solid var(--border)',
     background: 'var(--paper)',
     color: 'var(--ink)',
     outline: 'none',
@@ -142,7 +142,7 @@ export const WorkflowAdmin = () => {
       <div className="page-container" style={{ paddingTop: '6rem', paddingBottom: '8rem', maxWidth: '860px', margin: '0 auto' }}>
 
         {/* Header */}
-        <div style={{ borderBottom: '2px solid var(--ink)', paddingBottom: '2rem', marginBottom: '3rem' }}>
+        <div style={{ borderBottom: '1px solid var(--border)', paddingBottom: '2rem', marginBottom: '3rem' }}>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.4, marginBottom: '0.8rem' }}>
             ADMIN · DASHBOARD
           </p>
@@ -158,7 +158,7 @@ export const WorkflowAdmin = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2.5rem' }}>
           {phases.map((phase, i) => (
             <div key={i} style={{
-              border: '1.5px solid var(--ink)',
+              border: '1px solid var(--border)',
               background: 'var(--paper-dark)',
               padding: '1.4rem 1.8rem',
               display: 'grid',
@@ -184,11 +184,11 @@ export const WorkflowAdmin = () => {
               {/* Actions */}
               <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexShrink: 0 }}>
                 <button onClick={() => movePhase(i, -1)} disabled={i === 0}
-                  style={{ background: 'none', border: '1px solid var(--ink)', color: 'var(--ink)', padding: '0.3rem 0.55rem', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', opacity: i === 0 ? 0.25 : 1 }}>
+                  style={{ background: 'none', border: '1px solid var(--border)', color: 'var(--ink)', padding: '0.3rem 0.55rem', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', opacity: i === 0 ? 0.25 : 1 }}>
                   ↑
                 </button>
                 <button onClick={() => movePhase(i, 1)} disabled={i === phases.length - 1}
-                  style={{ background: 'none', border: '1px solid var(--ink)', color: 'var(--ink)', padding: '0.3rem 0.55rem', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', opacity: i === phases.length - 1 ? 0.25 : 1 }}>
+                  style={{ background: 'none', border: '1px solid var(--border)', color: 'var(--ink)', padding: '0.3rem 0.55rem', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', opacity: i === phases.length - 1 ? 0.25 : 1 }}>
                   ↓
                 </button>
                 <button onClick={() => openEdit(i)}
@@ -196,7 +196,7 @@ export const WorkflowAdmin = () => {
                   EDIT
                 </button>
                 <button onClick={() => deletePhase(i)}
-                  style={{ background: 'none', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '0.35rem 0.65rem', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', opacity: 0.5 }}>
+                  style={{ background: 'none', border: '1px solid var(--border)', color: 'var(--ink)', padding: '0.35rem 0.65rem', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', opacity: 0.5 }}>
                   ✕
                 </button>
               </div>
@@ -206,7 +206,7 @@ export const WorkflowAdmin = () => {
 
         {/* Add Phase Button */}
         <button onClick={addPhase}
-          style={{ border: '1.5px dashed var(--ink)', background: 'transparent', color: 'var(--ink)', padding: '1rem 2rem', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', width: '100%', opacity: 0.6, marginBottom: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem' }}>
+          style={{ border: '1px dashed var(--border)', background: 'transparent', color: 'var(--ink)', padding: '1rem 2rem', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', width: '100%', opacity: 0.6, marginBottom: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem' }}>
           <span style={{ fontSize: '1.1rem' }}>+</span> ADD NEW PHASE — VECTOR AUTO-GENERATED
         </button>
 
@@ -231,11 +231,11 @@ export const WorkflowAdmin = () => {
             display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem',
           }}>
             <div style={{
-              background: 'var(--paper)', border: '2px solid var(--ink)',
+              background: 'var(--paper)', border: '1px solid var(--border)',
               padding: '2.5rem', maxWidth: '680px', width: '100%', maxHeight: '90vh', overflowY: 'auto',
             }}>
               {/* Modal header */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--ink)', paddingBottom: '1.2rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '1.2rem' }}>
                 <VectorPreview index={editingIndex} size={32} />
                 <div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', opacity: 0.4, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Editing Phase {editingIndex + 1}</div>
@@ -281,7 +281,7 @@ export const WorkflowAdmin = () => {
               </div>
 
               {/* Modal actions */}
-              <div style={{ display: 'flex', gap: '0.8rem', marginTop: '2rem', borderTop: '1px solid var(--ink)', paddingTop: '1.5rem' }}>
+              <div style={{ display: 'flex', gap: '0.8rem', marginTop: '2rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
                 <button onClick={saveEdit} className="btn-brutalist" style={{ fontFamily: 'var(--font-mono)' }}>
                   SAVE CHANGES
                 </button>

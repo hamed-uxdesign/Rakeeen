@@ -16,7 +16,7 @@ export const SkillTag: React.FC<SkillTagProps> = ({ title, description, index })
     <div className="premium-skill-card">
       <style>{`
         .premium-skill-card {
-          border: 1.5px solid var(--ink);
+          border: 1px solid var(--border);
           background: var(--paper-dark);
           padding: 1.25rem 1.6rem;
           display: flex;

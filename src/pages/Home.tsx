@@ -157,7 +157,7 @@ export const Home = () => {
             width: '80px',
             height: '80px',
             borderRadius: '50%',
-            border: '2px solid var(--ink)',
+            border: '1px solid var(--border)',
             overflow: 'hidden',
             background: 'var(--paper-dark)',
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'

@@ -114,11 +114,11 @@ export const Contact = () => {
         }
 
         .premium-input-box:focus-within {
-          border-color: var(--ink);
+          border-color: var(--border);
           background: rgba(34, 44, 7, 0.06);
         }
         body.dark .premium-input-box:focus-within {
-          border-color: var(--ink);
+          border-color: var(--border);
           background: rgba(255, 255, 255, 0.05);
         }
 
@@ -174,7 +174,7 @@ export const Contact = () => {
         <div className="spacious-contact-container">
           
           {/* ── Spacious Title Area ── */}
-          <div style={{ borderBottom: '1.5px solid var(--ink)', paddingBottom: '2.5rem', marginBottom: '4rem' }}>
+          <div style={{ borderBottom: '1px solid var(--border)', paddingBottom: '2.5rem', marginBottom: '4rem' }}>
             <p style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '0.68rem',
@@ -208,7 +208,7 @@ export const Contact = () => {
               {sent ? (
                 /* Spacious Success Message */
                 <div style={{
-                  border: '1.5px solid var(--ink)',
+                  border: '1px solid var(--border)',
                   background: 'var(--paper-dark)',
                   padding: '4rem 2rem',
                   textAlign: 'center',
