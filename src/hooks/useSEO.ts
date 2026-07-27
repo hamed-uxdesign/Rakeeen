@@ -12,7 +12,7 @@ const DEFAULT_PERSON_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Hamed Walid",
-  "jobTitle": "Product-Focused UI/UX Designer",
+  "jobTitle": "Product Builder",
   "url": "https://hamedwalid.com",
   "sameAs": [
     "https://www.linkedin.com/in/hamedwalidofficial",
@@ -22,7 +22,8 @@ const DEFAULT_PERSON_SCHEMA = {
 
 export const useSEO = ({ title, description, image, path, schema }: SEOProps) => {
   useEffect(() => {
-    if (title) document.title = `${title} | Hamed Walid`;
+    // If a title is provided by the caller, set a contextual tab title
+    if (title) document.title = `${title} | Rakeeen`;
     
     // Manage Meta Description synchronously
     if (description) {
@@ -45,7 +46,7 @@ export const useSEO = ({ title, description, image, path, schema }: SEOProps) =>
       meta.setAttribute('content', content);
     };
 
-    if (title) setOG('og:title', `${title} | Hamed Walid`);
+    if (title) setOG('og:title', `${title} | Rakeeen`);
     if (description) setOG('og:description', description);
     if (image) setOG('og:image', image);
     if (path) setOG('og:url', `https://hamedwalid.com${path}`);

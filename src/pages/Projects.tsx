@@ -15,7 +15,7 @@ export const Projects = () => {
   const isAr = lang === 'ar';
 
   useEffect(() => {
-    document.title = `${t('projects')} | Hamed Walid`;
+    document.title = `${t('projects')} | Rakeeen`;
   }, [t]);
 
   const cats: string[] = ['all', ...Array.from(

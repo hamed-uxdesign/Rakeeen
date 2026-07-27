@@ -10,6 +10,7 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
   const { lang, setLang, t, resolveField, resolveFieldPlain } = useLang() as any;
   const location = useLocation();
   const isDark = settings.theme === 'dark';
+  const isAr = lang === 'ar';
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -27,10 +28,10 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
   }, [isLangOpen]);
 
   const navLinks = [
-    { name: t('home'),     path: '/' },
-    { name: t('projects'), path: '/projects' },
-    { name: t('about'),    path: '/about' },
-    { name: t('contact'),  path: '/contact' },
+    { name: isAr ? t('home') : 'HOME',     path: '/' },
+    { name: isAr ? t('projects') : 'PROJECTS', path: '/projects' },
+    { name: isAr ? t('about') : 'ABOUT',    path: '/about' },
+    { name: isAr ? t('contact') : 'SAY HEYYY',  path: '/contact' },
   ];
 
   const isActive = (path: string) => {
@@ -43,6 +44,8 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
   };
 
   const siteName = resolveField(siteConfig.name);
+  const logoSrc = siteConfig.siteImages?.navbarLogo || siteConfig.siteImages?.aboutPortrait || '';
+  const [logoLoaded, setLogoLoaded] = useState(false);
 
   return (
     <nav 
@@ -59,27 +62,31 @@ export const Navbar = ({ isOverlay }: { isOverlay?: boolean }) => {
     >
       {/* Logo */}
       <Link to="/" className="navbar-logo" onClick={() => setIsMenuOpen(false)}>
-        {(siteConfig.siteImages?.navbarLogo || siteConfig.siteImages?.aboutPortrait) ? (
-          <div style={{ 
-            width: 35, 
-            height: 35, 
-            borderRadius: "50%", 
-            border: `1.5px solid ${isOverlay ? '#faf6ee' : 'var(--sepia)'}`, 
-            overflow: "hidden", 
-            background: "var(--paper-dark)",
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <img 
-              src={siteConfig.siteImages.navbarLogo || siteConfig.siteImages.aboutPortrait} 
-              alt="RAKEEEEN" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-            />
+        <div style={{ 
+          width: 35, 
+          height: 35, 
+          borderRadius: "50%", 
+          border: `1.5px solid ${isOverlay ? '#faf6ee' : 'var(--sepia)'}`, 
+          overflow: "hidden", 
+          background: "var(--paper-dark)",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative'
+        }}>
+          {/* Mascot sits underneath and fades out when image loads to avoid layout shift */}
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <MascotFace size={32} color={isOverlay ? '#faf6ee' : 'var(--ink)'} style={{ opacity: logoLoaded ? 0 : 1, transition: 'opacity 220ms ease' } as React.CSSProperties} />
           </div>
-        ) : (
-          <MascotFace size={32} color={isOverlay ? '#faf6ee' : 'var(--ink)'} />
-        )}
+          {logoSrc ? (
+            <img
+              src={logoSrc}
+              alt="RAKEEEEN"
+              onLoad={() => setLogoLoaded(true)}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: logoLoaded ? 1 : 0, transition: 'opacity 260ms ease' }}
+            />
+          ) : null}
+        </div>
         <span className="sketch-font text-lg md:text-xl font-normal" style={{ color: isOverlay ? '#faf6ee' : 'var(--ink)' }}>
           {t('brandName')}
         </span>

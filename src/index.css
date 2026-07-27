@@ -3,7 +3,43 @@
 /* ── FONTS — must precede Tailwind expansion ── */
 @import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@100..900&display=swap');
+
+/* thmanya Serif Text - local font files located in /public/fonts/thmanyahseriftext/ */
+@font-face {
+  font-family: 'thmanya Serif Text';
+  src: url('/fonts/thmanyahseriftext/thmanyahseriftext-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'thmanya Serif Text';
+  src: url('/fonts/thmanyahseriftext/thmanyahseriftext-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'thmanya Serif Text';
+  src: url('/fonts/thmanyahseriftext/thmanyahseriftext-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'thmanya Serif Text';
+  src: url('/fonts/thmanyahseriftext/thmanyahseriftext-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'thmanya Serif Text';
+  src: url('/fonts/thmanyahseriftext/thmanyahseriftext-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* ── OUTLINED HEADLINE (text-stroke for brutalist hollow text) ── */
 .headline-outlined {
@@ -87,7 +123,7 @@
   --font-sketch:  'General Sans Variable', 'General Sans', system-ui, sans-serif;
   --font-body:    'General Sans Variable', 'General Sans', system-ui, -apple-system, sans-serif;
   --font-mono:    'Geist Mono', 'JetBrains Mono', 'Courier New', monospace;
-  --font-ar-display: 'thmanyah serif display', 'Noto Serif Arabic', serif;
+  --font-ar-display: 'thmanya Serif Text', serif;
 
   /* Spacing */
   --space-xs: 0.3rem; --space-sm: 0.6rem; --space-md: 1rem;
@@ -154,15 +190,15 @@ body.dark .trust-badge-ux {
 
 /* ── ARABIC RTL ── */
 html.rtl, [dir="rtl"] {
-  --font-sketch:  'thmanyah serif display', 'Noto Serif Arabic', serif;
-  --font-body:    'thmanyah serif display', 'Noto Serif Arabic', serif;
-  --font-display: 'thmanyah serif display', 'Noto Serif Arabic', serif;
+  --font-sketch:  'thmanya Serif Text', serif;
+  --font-body:    'thmanya Serif Text', serif;
+  --font-display: 'thmanya Serif Text', serif;
   --font-mono:    'Geist Mono', monospace;
 }
 
-/* Force Noto Serif Arabic universally for all elements in RTL to clean up any remaining old fonts */
+/* Force the single chosen Arabic font for RTL to ensure consistency */
 html.rtl, [dir="rtl"], html.rtl *, [dir="rtl"] * {
-  font-family: 'thmanyah serif display', 'Noto Serif Arabic', serif !important;
+  font-family: 'thmanya Serif Text' !important;
 }
 
 /* Maintain Geist Mono for numbers and timers */

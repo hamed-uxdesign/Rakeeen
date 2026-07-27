@@ -16,6 +16,9 @@ const UI_TRANSLATIONS: Translations = {
   projects: { en: "Projects", ar: "أعمالي", it: "Progetti" },
   about: { en: "About", ar: "مين حامد؟", it: "Chi Sono" },
   contact: { en: "Contact", ar: "كلمنا", it: "Contatto" },
+  productBuilder: { en: "Product Builder", ar: "باني المنتج", it: "Costruttore di Prodotti" },
+  howWeBuild: { en: "HOW I BUILD", ar: "كيف أبني", it: "COME COSTRUISCO" },
+  workflow: { en: "THE WORKFLOW", ar: "منهجية العمل", it: "IL PROCESSO" },
   selectedWorks: { en: "Selected Works", ar: "مشاريع مختارة", it: "Opere Selezionate" },
   featured: { en: "// featured", ar: "// الأهم", it: "// in evidenza" },
   viewAll: { en: "View All", ar: "شوف الكل", it: "Mostra Tutti" },
@@ -25,7 +28,7 @@ const UI_TRANSLATIONS: Translations = {
   sayHello: { en: "Hello ?", ar: "هلا ؟", it: "Ciao ?" },
   bridgingLogic: { en: 'Bridging complex logic with', ar: 'بربط منطق البيزنس المعقد بـ', it: 'Colmare la logica complessa con' },
   humanCentered: { en: 'human-centered design.', ar: 'تصميم يخدم الناس صح.', it: 'design centrato sull\'uomo.' },
-  behindPixels: { en: "Behind the Pixels", ar: "ورا الكواليس", it: "Dietro i Pixel" },
+  behindPixels: { en: "Behind the Keyboard", ar: "خلف لوحة المفاتيح", it: "Dietro la Tastiera" },
   myJourney: { en: "The Story So Far", ar: "الرحلة حتى الآن", it: "La Storia Finora" },
   experience: { en: "// my experience", ar: "// رحلتي المهنية", it: "// esperienza" },
   mySkills: { en: "My skills", ar: "مهاراتي", it: "Le Mie Competenze" },
@@ -103,9 +106,9 @@ const UI_TRANSLATIONS: Translations = {
     it: "Progettare per l'uomo... con l'IA" 
   },
   hero_subtitle: {
-    en: "UX Designer turning complex ideas into simple, user-friendly products. Combining human-centered design with AI to deliver high-quality results, fast",
-    ar: "مصمم تجربة المستخدم بساعدك تحول فكرتك لمنتج بسيط وسهل الاستخدام. بدمج بين التصميم المريح والذكاء الاصطناعي عشان أطلعلك شغل تقيل في وقت قياسي",
-    it: "Designer UX trasformo idee complesse in prodotti semplici e intuitivi. Unisco design umano e IA per risultati di qualità in tempi record"
+    en: "Product Builder turning complex ideas into simple, user-friendly products. Combining human-centered design with AI to deliver high-quality results, fast",
+    ar: "باني المنتج بساعدك تحول فكرتك لمنتج بسيط وسهل الاستخدام. بدمج بين التصميم المريح والذكاء الاصطناعي عشان أطلعلك شغل تقيل في وقت قياسي",
+    it: "Costruttore di Prodotti trasformo idee complesse in prodotti semplici e intuitivi. Unisco design umano e IA per risultati di qualità in tempi record"
   },
   prevProject: { en: "← Previous Project", ar: "← المشروع اللي فات", it: "← Progetto Precedente" },
   nextProject: { en: "Next Project →", ar: "المشروع الجاي →", it: "Prossimo Progetto →" }

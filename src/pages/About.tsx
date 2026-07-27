@@ -18,7 +18,7 @@ export const About = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.title = `${t('about')} | ${resolveField(siteConfig.name)}`;
+    document.title = `${t('about')} | Rakeeen`;
   }, [siteConfig, t, resolveField]);
 
   // Scroll spy to highlight active timeline node based on viewport scroll position
@@ -189,7 +189,7 @@ export const About = () => {
             marginBottom: '1rem',
             ...fadeUp(0.05),
           }}>
-            {isAr ? 'ركين · عن المصمم' : 'RAKEEEN · ABOUT'}
+            {isAr ? 'ركين · عن ركين' : 'RAKEEEN · ABOUT'}
           </p>
           <h1 style={{
             fontFamily: 'var(--font-display)',
@@ -201,7 +201,7 @@ export const About = () => {
             color: 'var(--ink)',
             ...fadeUp(0.1),
           }}>
-            {isAr ? 'قصة الرحلة' : 'Behind\nthe pixels'}
+            {t('behindPixels')}
           </h1>
         </div>
 

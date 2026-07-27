@@ -36,7 +36,7 @@ export const ProjectDetail = () => {
 
   useEffect(() => {
     if (project) {
-      document.title = `${resolveField(project.title)} | Hamed Walid`;
+      document.title = `${resolveField(project.title)} | Rakeeen`;
       window.scrollTo(0, 0);
     }
   }, [project, resolveField]);

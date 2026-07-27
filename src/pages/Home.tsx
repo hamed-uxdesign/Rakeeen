@@ -95,12 +95,13 @@ export const Home = () => {
   const isArabic = lang === 'ar';
 
   React.useEffect(() => {
-    document.title = `${resolveField(siteConfig.name)} | UX Designer`;
+    // Home keeps the full branding title
+    document.title = `Rakeeen ... Product Builder`;
     // Instantly mark load complete on mount to ensure navbar & standard scroll behave correctly
     if (setInitialLoadComplete) {
       setInitialLoadComplete();
     }
-  }, [siteConfig, resolveField, setInitialLoadComplete]);
+  }, [siteConfig, resolveField, setInitialLoadComplete, t]);
 
   /* staggered physical spring entrance (instant load with critically damped spring physics animation) */
   const anim = (delay: number, y = 20): React.CSSProperties => ({
@@ -148,19 +149,12 @@ export const Home = () => {
             ...anim(0.02, 16) 
           }}
         >
-          {/* Left Vertical Standing Bracket */}
-          <svg width="14" height="64" viewBox="0 0 14 64" fill="none" style={{ color: 'var(--ink)', opacity: 0.8 }}>
-            <path d="M12 2 L2 8 L2 56 L12 62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          </svg>
-
           <div style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            border: '1px solid var(--border)',
+            width: '120px',
+            height: '120px',
             overflow: 'hidden',
-            background: 'var(--paper-dark)',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+            background: 'transparent',
+            borderRadius: '50%'
           }}>
             {siteConfig.siteImages?.aboutPortrait ? (
               <img 
@@ -168,17 +162,8 @@ export const Home = () => {
                 alt="Hamed" 
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
               />
-            ) : (
-              <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <MascotFace size={48} color="var(--ink)" />
-              </div>
-            )}
+            ) : null}
           </div>
-
-          {/* Right Vertical Standing Bracket */}
-          <svg width="14" height="64" viewBox="0 0 14 64" fill="none" style={{ color: 'var(--ink)', opacity: 0.8 }}>
-            <path d="M2 2 L12 8 L12 56 L2 62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          </svg>
         </div>
 
         {/* ── Headline (Elegant size & font weight precisely matching UX Pilot, rendered instantly!) ── */}
@@ -209,7 +194,7 @@ export const Home = () => {
             onClick={() => navigate('/workflow')}
             style={{ padding: '1.2rem 2.5rem', minWidth: '0', maxWidth: '100%', width: 'fit-content', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem' }}
           >
-            {isArabic ? 'منهجية وتدفق العمل المهني' : 'HOW I THINK & WORK'}
+            {t('howWeBuild')}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isArabic ? 'rotate(180deg)' : 'none' }}>
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>

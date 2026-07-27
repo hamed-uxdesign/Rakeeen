@@ -33,7 +33,7 @@ const PHASE_COLORS = [
 ];
 
 export const Workflow = () => {
-  const { lang } = useLang() as any;
+  const { lang, t } = useLang() as any;
   const navigate = useNavigate();
   const { workflowPhases } = useSiteContext() as any;
   const isAr = lang === 'ar';
@@ -45,8 +45,8 @@ export const Workflow = () => {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.title = isAr ? 'منهجية العمل | Hamed Walid' : 'The Workflow | Hamed Walid';
-  }, [isAr]);
+    document.title = `${t('howWeBuild')} | Rakeeen`;
+  }, [t]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,54 +96,88 @@ export const Workflow = () => {
 
   const phases = workflowPhases && workflowPhases.length > 0 ? workflowPhases : [
     {
-      en_title: '01 · Pure UX & Logic',
-      ar_title: '01 · التخطيط وتجربة المستخدم',
-      en_sub: 'Brainstorming & User Flows',
-      ar_sub: 'العصف الذهني والمسارات',
-      en_desc: "We map the user's journey before writing a single line of code. Wireframes, flows, and early testing keep the idea sharp and the direction clear.",
-      ar_desc: 'نرسم رحلة المستخدم قبل أي كود. أسكيشات سريعة واختبار مبكر يحفظ الوقت ويوضح الاتجاه.',
+      en_title: '01 · DISCOVERY & STRATEGY',
+      ar_title: '01 · الاكتشاف والاستراتيجية',
+      it_title: '01 · SCOPERTA E STRATEGIA',
+      en_sub: 'BUSINESS LOGIC & USER RESEARCH',
+      ar_sub: 'منطق العمل والبحث عن المستخدم',
+      it_sub: 'LOGICA DI BUSINESS E RICERCA UTENTE',
+      en_desc: 'We start by understanding the problem, not the screen. Business goals, user needs, and technical constraints are mapped before a single wireframe is drawn.',
+      ar_desc: 'نبدأ من فهم المشكلة وليس الشاشة. نرسم أهداف العمل واحتياجات المستخدم والقيود التقنية قبل حتى رسم أي هيكل أولي.',
+      it_desc: 'Partiamo dal capire il problema, non dallo schermo. Obiettivi, bisogni degli utenti e vincoli tecnici vengono mappati prima di disegnare anche solo un wireframe.',
+      en_skills: 'User Research · Competitive Analysis · Problem Definition',
+      ar_skills: 'بحث المستخدم · تحليل المنافسين · تعريف المشكلة',
+      it_skills: 'Ricerca Utente · Analisi Competitiva · Definizione del Problema',
+    },
+    {
+      en_title: '02 · UX & LOGIC',
+      ar_title: '02 · تجربة المستخدم والمنطق',
+      it_title: '02 · UX E LOGICA',
+      en_sub: 'USER FLOWS & WIREFRAMES',
+      ar_sub: 'مسارات المستخدم والهياكل الأولية',
+      it_sub: 'FLUSSI UTENTE E WIREFRAME',
+      en_desc: 'Every journey is designed before it is built. Flows, wireframes, and early testing keep the logic sharp and the direction locked.',
+      ar_desc: 'كل رحلة يتم تصميمها قبل بنائها. المسارات والهياكل الأولية والاختبارات المبكرة تجعل المنطق واضحًا والاتجاه ثابتًا.',
+      it_desc: 'Ogni viaggio viene progettato prima di essere costruito. Flussi, wireframe e test iniziali mantengono la logica chiara e la direzione definita.',
       en_skills: 'User Flows · Wireframes · Usability Testing',
-      ar_skills: 'مسارات المستخدم · الهياكل السلكية · اختبار التجربة',
+      ar_skills: 'مسارات المستخدم · الهياكل الأولية · اختبار الاستخدام',
+      it_skills: 'Flussi Utente · Wireframe · Usability Testing',
     },
     {
-      en_title: '02 · UI & Figma Engineering',
-      ar_title: '02 · تصميم الواجهات والنظام',
-      en_sub: 'Design Tokens & Architecture',
-      ar_sub: 'المتغيرات والمكونات المرنة',
-      en_desc: "Flows become high-fidelity screens. Every component lives in a design system that mirrors production code — consistent, scalable, and handoff-ready.",
-      ar_desc: 'المسارات تتحول لشاشات دقيقة. كل مكوّن في نظام تصميم متكامل يشبه الكود الحقيقي، جاهز للتسليم.',
+      en_title: '03 · UI & FIGMA ENGINEERING',
+      ar_title: '03 · تصميم الواجهة والهندسة في فيجما',
+      it_title: '03 · UI E FIGMA ENGINEERING',
+      en_sub: 'DESIGN TOKENS & COMPONENT ARCHITECTURE',
+      ar_sub: 'الرموز التصميمية وهندسة المكونات',
+      it_sub: 'DESIGN TOKENS E ARCHITETTURA DEI COMPONENTI',
+      en_desc: 'High-fidelity screens built inside a design system that mirrors production code — consistent, scalable, and handoff-ready.',
+      ar_desc: 'شاشات عالية الدقة تُبنى داخل نظام تصميم يطابق الكود الإنتاجي — متسق وقابل للتطوير وجاهز للتسليم.',
+      it_desc: 'Schermate ad alta fedeltà costruite all’interno di un design system che rispecchia il codice di produzione — coerente, scalabile e pronta per il handoff.',
       en_skills: 'Figma Auto-Layout · Design Tokens · Edge Cases',
-      ar_skills: 'Auto Layout · نظام التصميم · الحالات الخاصة',
+      ar_skills: 'Auto Layout · الرموز التصميمية · الحالات الخاصة',
+      it_skills: 'Figma Auto-Layout · Design Tokens · Edge Cases',
     },
     {
-      en_title: '03 · Agentic Vibe Coding',
-      ar_title: '03 · التنفيذ البرمجي الذكي',
-      en_sub: 'Figma to React & TailwindCSS',
-      ar_sub: 'من فيجما إلى كود نظيف',
-      en_desc: "Design becomes semantic React with Tailwind. Clean state, responsive layouts, and global accessibility baked in from the start.",
-      ar_desc: 'التصميم يتحول لكود React & Tailwind نظيف. تجاوب كامل ومعايير وصول عالمية من البداية.',
-      en_skills: 'React · Tailwind CSS · Accessibility (a11y)',
-      ar_skills: 'React · Tailwind · معايير الوصول',
+      en_title: '04 · DEVELOPMENT',
+      ar_title: '04 · التطوير',
+      it_title: '04 · SVILUPPO',
+      en_sub: 'FRONT-END · BACK-END · FLUTTER',
+      ar_sub: 'الواجهة الأمامية · الخلفية · فلاتر',
+      it_sub: 'FRONT-END · BACK-END · FLUTTER',
+      en_desc: 'The product gets built. Clean code, responsive layouts, and solid backend logic — all aligned with the design system.',
+      ar_desc: 'يتم بناء المنتج. كود نظيف، تخطيطات متجاوبة، ومنطق خلفي قوي — كل ذلك متوافق مع نظام التصميم.',
+      it_desc: 'Il prodotto viene costruito. Codice pulito, layout responsivi e una solida logica backend — tutto allineato al design system.',
+      en_skills: 'React · Tailwind · Flutter · API Integration',
+      ar_skills: 'React · Tailwind · Flutter · ربط الـ API',
+      it_skills: 'React · Tailwind · Flutter · Integrazione API',
     },
     {
-      en_title: '04 · Visual & Code QA',
-      ar_title: '04 · مراجعة الجودة والفحص',
-      en_sub: 'Linters & Layout Audits',
-      ar_sub: 'التطابق البصري وفحص الأخطاء',
-      en_desc: "Every pixel is checked against the design. Automated linters run to catch issues early — the result is a fast, bug-free, production-ready product.",
-      ar_desc: 'كل بكسل يُقارن بالتصميم. أدوات الفحص تلتقط الأخطاء مبكراً للخروج بمنتج سريع وخالٍ من الأعطال.',
-      en_skills: 'Design Parity · Code Standards · Performance',
-      ar_skills: 'التطابق البصري · معايير الكود · الأداء',
+      en_title: '05 · QA & TESTING',
+      ar_title: '05 · الجودة والاختبار',
+      it_title: '05 · QA E TEST',
+      en_sub: 'VISUAL · FUNCTIONAL · PERFORMANCE',
+      ar_sub: 'بصري · وظيفي · أداء',
+      it_sub: 'VISIVO · FUNZIONALE · PERFORMANCE',
+      en_desc: 'Every pixel and every function gets tested. No broken flows, no layout bugs, no surprises after launch.',
+      ar_desc: 'كل بكسل وكل وظيفة يتم اختبارها. لا توجد مسارات مكسورة ولا أخطاء تخطيط ولا مفاجآت بعد الإطلاق.',
+      it_desc: 'Ogni pixel e ogni funzione vengono testati. Nessun flusso rotto, nessun bug di layout, nessuna sorpresa dopo il lancio.',
+      en_skills: 'Design Parity · Code Standards · Cross-Device Testing',
+      ar_skills: 'التطابق البصري · معايير الكود · اختبار عبر الأجهزة',
+      it_skills: 'Parità di Design · Standard di Codice · Test Cross-Device',
     },
     {
-      en_title: '05 · Handover & Analytics',
-      ar_title: '05 · التسليم والتحليلات',
-      en_sub: 'Backend Ready Components',
-      ar_sub: 'كود موثق جاهز للربط',
-      en_desc: "User behavior analytics are embedded. The codebase is handed over documented, structured, and backend-ready for smooth developer integration.",
-      ar_desc: 'نُدمج تحليلات سلوك المستخدم ونسلّم الكود موثقاً ومنظماً جاهزاً للربط بقاعدة البيانات.',
-      en_skills: 'Analytics · Technical Docs · API Integration',
-      ar_skills: 'تحليلات الأداء · التوثيق البرمجي · ربط API',
+      en_title: '06 · LAUNCH & MONITOR',
+      ar_title: '06 · الإطلاق والمراقبة',
+      it_title: '06 · LANCIO E MONITORAGGIO',
+      en_sub: 'LIVE · DEPLOYED · TRACKED',
+      ar_sub: 'مباشر · مُنَفَّذ · مُتَابَع',
+      it_sub: 'LIVE · DEPLOYED · TRACKED',
+      en_desc: 'The product goes live. Deployed, monitored, and ready for real users — not handed off, delivered.',
+      ar_desc: 'يخرج المنتج للحياة. يُنشر ويُراقب ويكون جاهزًا للمستخدمين الحقيقيين — وليس مجرد تسليم.',
+      it_desc: 'Il prodotto va live. Deployato, monitorato e pronto per utenti reali — non solo consegnato.',
+      en_skills: 'App Store · Web Deployment · Analytics Setup',
+      ar_skills: 'متجر التطبيقات · النشر على الويب · إعداد التحليلات',
+      it_skills: 'App Store · Deploy Web · Setup Analytics',
     },
   ];
 
@@ -232,7 +266,7 @@ export const Workflow = () => {
             opacity: 0.4,
             marginBottom: '1rem',
           }}>
-            {isAr ? 'منهجية العمل' : 'THE WORKFLOW'}
+            {t('workflow')}
           </p>
           <h1 style={{
             fontFamily: 'var(--font-display)',
@@ -244,7 +278,7 @@ export const Workflow = () => {
             color: 'var(--ink)',
             ...fadeUp(0.1),
           }}>
-            {isAr ? 'كيف يفكر المهندس' : 'How My Brain Works'}
+            {t('howWeBuild')}
           </h1>
         </div>
 
@@ -366,13 +400,13 @@ export const Workflow = () => {
           </p>
           <div style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
             <button className="btn-brutalist" onClick={() => navigate('/projects')} style={{ flex: '1 1 160px', maxWidth: '220px', fontFamily: 'var(--font-mono)' }}>
-              {isAr ? 'أعمالي' : 'MY WORK ?'}
+              {isAr ? 'أعمالي' : 'Projects'}
             </button>
             <button className="btn-brutalist btn-brutalist--outline" onClick={() => navigate('/about')} style={{ flex: '1 1 160px', maxWidth: '220px', fontFamily: 'var(--font-mono)' }}>
-              {isAr ? 'عني' : 'ABOUT ME'}
+              {isAr ? 'عني' : 'About'}
             </button>
             <button className="btn-brutalist btn-brutalist--ghost" onClick={() => navigate('/contact')} style={{ flex: '1 1 160px', maxWidth: '220px', fontFamily: 'var(--font-mono)' }}>
-              {isAr ? 'تواصل معي' : 'SAY HEYY !'}
+              {isAr ? 'تواصل معي' : 'Say Heyyy'}
             </button>
           </div>
         </div>

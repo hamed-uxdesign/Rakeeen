@@ -25,7 +25,7 @@ export const Contact = () => {
   const isAr = lang === 'ar';
 
   React.useEffect(() => {
-    document.title = `${t('contact')} | ${resolveField(siteConfig.name)}`;
+    document.title = `${t('contact')} | Rakeeen`;
   }, [t, resolveField, siteConfig.name]);
 
   const cf = (siteConfig as any).contactForm;
